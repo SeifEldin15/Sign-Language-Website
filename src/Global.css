@@ -2,13 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-
-:root {
-    --primary-color: #141F23; /* Example primary color */
-    --secondary-color: #FBFF8B; /* Example secondary color */
-    --accent-color: #ADF592; /* Example accent color */
-    --background-color: #141F23; /* Example background color */
-    --text-color-dark-1: #000000; /* Example text color */
-    --text-color-dark-2: #E7EFFD; /* Example text color */
-}
-/* ... existing code ... */
