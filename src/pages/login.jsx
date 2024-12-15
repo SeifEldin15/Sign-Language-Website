@@ -3,11 +3,10 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+ 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-gray-800 rounded-xl p-8 shadow-2xl">
-        {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-green-400 mb-2">Login</h1>
           <p className="text-gray-400">Welcome back! Please enter your details</p>
