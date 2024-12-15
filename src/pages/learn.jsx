@@ -12,21 +12,22 @@ const Learn = () => {
         title: "Newcomer I (A1.1)",
         units: "14",
         description: "Learn how to introduce yourself and answer simple questions about your basic needs.",
-        isActive: true // First card will be active
+        isActive: false
       },
       {
         level: "A1",  
         title: "Newcomer II (A1.2)",
         units: "11",
         description: "Learn how to engage in short conversations about yourself, your everyday life, and your hobbies.",
-        isActive: false
+        isActive: true
       },
       {
         level: "A2",
         title: "Beginner I (A2.1)",
         units: "12",
         description: "Learn how to express preferences, past experiences and basic explanations in conversation with others.",
-        isActive: false
+        isActive: false,
+        isLocked: true
       }
     ];
 
@@ -40,6 +41,7 @@ const Learn = () => {
             units={lesson.units}
             description={lesson.description}
             isActive={lesson.isActive}
+            isLocked={lesson.isLocked}
           />
         ))}
       </div>
