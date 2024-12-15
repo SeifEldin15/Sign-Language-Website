@@ -42,6 +42,36 @@ const QuestionPage = () => {
       ],
       correctAnswer: 2
     },
+    {
+        id: 2,
+        question: "Translate this sign",
+        options: [
+          { id: 1, text: 'incorrect' },
+          { id: 2, text: 'correct' },
+          { id: 3, text: 'also incorrect' },
+        ],
+        correctAnswer: 2
+      },
+      {
+        id: 2,
+        question: "Translate this sign",
+        options: [
+          { id: 1, text: 'incorrect' },
+          { id: 2, text: 'correct' },
+          { id: 3, text: 'also incorrect' },
+        ],
+        correctAnswer: 2
+      },
+      {
+        id: 2,
+        question: "Translate this sign",
+        options: [
+          { id: 1, text: 'incorrect' },
+          { id: 2, text: 'correct' },
+          { id: 3, text: 'also incorrect' },
+        ],
+        correctAnswer: 2
+      },
   ];
 
   useEffect(() => {
@@ -96,7 +126,8 @@ const QuestionPage = () => {
       <ProgressHeader 
         lives={lives} 
         currentQuestion={currentQuestionIndex + 1} 
-        totalQuestions={questions.length} 
+        totalQuestions={questions.length}
+        showQuestion={showQuestion}
       />
       
       {showCorrectPopup && !isQuizComplete && (
