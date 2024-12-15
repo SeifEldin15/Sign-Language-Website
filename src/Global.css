@@ -1,12 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* Add to your global CSS file */
+
+@font-face {
+  font-family: 'Feather';
+  src: url('./fonts/Feather-Bold.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Feather', sans-serif;
+}
+
 .scrollbar-hide {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-  }
+}
   
-  .scrollbar-hide::-webkit-scrollbar {
+.scrollbar-hide::-webkit-scrollbar {
     display: none;  /* Chrome, Safari and Opera */
-  }
+}
+/* In your CSS file */
+.transition-border {
+  transition: border-color 300ms;
+}
