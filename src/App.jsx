@@ -8,6 +8,7 @@ import Lesson from './pages/Lesson'
 import QuestionPage from './pages/QuestionPage'
 import Home2 from './pages/Home2'
 import Settings from './pages/Settings'
+import Dictionary from './pages/Dictionary'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/lesson" element={<Lesson />} />
         <Route path="/question" element={<QuestionPage />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/dictionary" element={<Dictionary />} />
       </Routes>
     </BrowserRouter>
     </>
