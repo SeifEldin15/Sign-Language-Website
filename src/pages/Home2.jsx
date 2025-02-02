@@ -30,10 +30,10 @@ const Home2 = () => {
 
   return (
     <>
-    <div className='fixed top-0 left-0 h-screen'>
+    <div className='fixed md:top-0 bottom-0 md:left-0 md:h-screen w-full md:w-auto z-50'>
       <Sidebar />
     </div>
-    <div className="min-h-screen bg-[#141F23] text-white p-4 md:p-8 lg:p-12 ml-64 relative overflow-hidden">
+    <div className="min-h-screen bg-[#141F23] text-white p-4 md:p-8 lg:p-12 md:ml-64 relative overflow-hidden">
       {/* Add gradient beam */}
       
       <Header />
@@ -41,12 +41,12 @@ const Home2 = () => {
       {/* Main Content */}
       <div className="max-w-5xl mx-auto">
         {/* Hero Section */}
-        <div className="bg-blue-600 rounded-2xl p-12 mb-8 relative overflow-hidden flex gap-4 justify-around items-center">
+        <div className="bg-blue-600 rounded-2xl pl-8 pt-8 mb-8 relative overflow-hidden flex gap-4 justify-between items-center">
           <div className="relative z-10">
-            <h1 className="text-2xl md:text-7xl font-bold mb-2">Speak with <br /> your hands</h1>
+            <h1 className="text-3xl md:text-6xl font-bold mb-2">Speak with your <br /> hands</h1>
             <p className="text-blue-100 text-xl">Start communicating effectively today</p>
           </div>
-          <img src={Heroimg} alt="" className='max-w-[400px] max-h-[400px]' />
+          <img src={Heroimg} alt="" className='max-w-[300px] max-h-[300px]' />
         </div>
 
         {/* Services Grid */}

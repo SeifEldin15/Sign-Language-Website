@@ -18,10 +18,10 @@ const Learn = () => {
 
   return (
     <>
-      <div className='fixed top-0 left-0'>
+      <div className='fixed md:top-0 bottom-0 md:left-0 w-full md:w-auto z-50'>
         <Sidebar />
       </div>
-      <div className='w-full h-screen bg-[#141F23] p-6 overflow-y-auto'>
+      <div className='w-full min-h-screen bg-[#141F23] p-6 overflow-y-auto pb-24 md:pb-6 md:pl-72'>
         <div className='max-w-2xl mx-auto space-y-16 pt-24'>
           {lessons.map((lesson, index) => (
             <div 
