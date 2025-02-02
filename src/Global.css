@@ -2,13 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Feather';
-  src: url('./fonts/Feather-Bold.ttf') format('truetype');
-}
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700&display=swap');
 
 body {
-    font-family: 'Feather', sans-serif;
+    font-family: 'Cairo', sans-serif;
 }
 
 .scrollbar-hide {
