@@ -1,7 +1,6 @@
 // components/QuestionSection.jsx
 import React from 'react';
-import SignModel from './SignModel';
-import Model3d from '../assets/2.fbx?url';
+import signImage from '../assets/avatar/static_point_up.png';
 
 const QuestionSection = () => {
   return (
@@ -10,8 +9,8 @@ const QuestionSection = () => {
         Select the correct meaning
       </h1>
       <div className="flex justify-center mb-12 relative">
-        <div className="">
-        <SignModel modelUrl={Model3d}  />
+        <div className="w-1/2">
+          <img src={signImage} alt="Sign" className="w-full h-auto" />
         </div>
       </div>
     </div>
