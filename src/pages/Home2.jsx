@@ -17,7 +17,7 @@ import { FaRegHandPaper  } from "react-icons/fa";
 import Rocket from '../assets/home2/Isometric Stickers Rocket.png';
 import Paperplane from '../assets/home2/Isometric Stickers Paper Airplane.png';
 import Header from '../components/Header';
-import Heroimg from '../assets/home2/heroimg.png';
+import Heroimg from '../assets/home2/Heroimg.png';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { PiHandWavingBold } from "react-icons/pi";
