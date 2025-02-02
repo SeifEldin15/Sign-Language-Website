@@ -124,11 +124,11 @@ const QuestionPage = () => {
 
   return (
     <>
-    <div className='fixed top-0 left-0'>
+    <div className='fixed md:top-0 bottom-0 md:left-0 md:h-screen w-full md:w-auto z-50'>
       <Sidebar />
     </div>
 
-    <div className="min-h-screen bg-[#141F23] pt-12 ml-64">
+    <div className="min-h-screen bg-[#141F23] pt-12 md:ml-64 pb-24 md:pb-12 px-4 sm:px-6 lg:px-8">
       <ProgressHeader 
         lives={lives} 
         currentQuestion={currentQuestionIndex + 1} 
@@ -161,7 +161,7 @@ const QuestionPage = () => {
         />
       )}
 
-      <div className="text-center">
+      <div className="text-center max-w-7xl mx-auto">
         {isQuizComplete ? (
           <TotalPoints 
             totalPoints={totalPoints}
@@ -171,18 +171,18 @@ const QuestionPage = () => {
           <>
             <QuestionSection question={currentQuestion?.question} />
             
-            <div className="mt-4">
+            <div className="mt-4 w-full max-w-2xl mx-auto">
               {showQuestion ? (
-                <div className={`transition-opacity duration-300 ${showQuestion ? 'opacity-100' : 'opacity-0'}`}>
-                  <p className="text-white mb-7 max-w-2xl mx-auto">
+                <div className={`transition-opacity duration-300 ${showQuestion ? 'opacity-100' : 'opacity-0'} px-4`}>
+                  <p className="text-white mb-7 text-sm sm:text-base">
                     This is a sign that means something, just some placeholder text to fill this area and show this website 
                   </p>  
-                  <p className="text-white mb-14 max-w-2xl mx-auto">
+                  <p className="text-white mb-14 text-sm sm:text-base">
                     when you click the button you will be prompted with questions about this sign  
                   </p>  
                   <button 
                     onClick={handleStartAnswer}
-                    className="bg-blue-500 text-white px-6 py-2 rounded-lg">
+                    className="bg-blue-500 text-white px-4 sm:px-6 py-2 rounded-lg text-sm sm:text-base">
                     Start Answer
                   </button>
                 </div>
