@@ -5,6 +5,7 @@ import homeIcon from '../assets/TabBar-item.png';
 import dictionaryIcon from '../assets/Group 33880.png';
 import learnIcon from '../assets/book.png';
 import settingsIcon from '../assets/Group 33872.png';
+import logoImage from '../assets/logo1.png';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ const Sidebar = () => {
   return (
     <div className="md:h-screen md:w-64 w-full bg-[#141F23] md:p-6 p-3 border-t md:border-r border-gray-700">
       <div className="mb-8 hidden md:block">
-        <h1 className="text-[#58cc02] text-2xl font-bold">Logo</h1>
+        <img src={logoImage} alt="Logo" className="h-8" />
       </div>
 
       <nav>
