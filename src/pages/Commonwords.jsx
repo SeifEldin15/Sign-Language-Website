@@ -25,13 +25,11 @@ function Commonwords() {
   );
 
   return (
-    <div className="flex min-h-screen bg-[#141F23]">
-      <div className="fixed top-0 left-0">
-    <Sidebar />
-</div>
-      <main className="flex-1 p-4 md:p-8 lg:p-12 relative overflow-hidden ml-48">
-        {/* Add gradient beam */}
-        
+    <>
+      <div className="fixed md:top-0 bottom-0 md:left-0 md:h-screen w-full md:w-auto z-50">
+        <Sidebar />
+      </div>
+      <div className="min-h-screen bg-[#141F23] p-4 md:p-8 lg:p-12 md:ml-64 relative overflow-hidden pb-24 md:pb-12">
         <div className="max-w-2xl mx-auto relative z-10">
           {/* Search Bar */}
           <div className="mb-8">
@@ -64,8 +62,8 @@ function Commonwords() {
             )}
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 }
 
