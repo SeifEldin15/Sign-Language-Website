@@ -37,7 +37,6 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  text-shadow: 
-    0 0 10px rgba(88, 204, 2, 0.2),
-    0 0 15px rgba(125, 235, 78, 0.1);
+  -webkit-text-stroke: 0.5px rgba(88, 204, 2, 0.4);
+  filter: brightness(1.8) contrast(1.4) saturate(1.5);
 }
