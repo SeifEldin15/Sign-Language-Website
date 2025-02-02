@@ -5,7 +5,6 @@ import homeIcon from '../assets/TabBar-item.png';
 import dictionaryIcon from '../assets/Group 33880.png';
 import learnIcon from '../assets/book.png';
 import settingsIcon from '../assets/Group 33872.png';
-import logoImage from '../assets/logo1.png';
 
 const Sidebar = () => {
   const location = useLocation();
