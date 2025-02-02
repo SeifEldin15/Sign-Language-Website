@@ -29,13 +29,13 @@ const Learn = () => {
               onClick={() => navigate('/question')}
               className={`${lesson.color} rounded-xl p-6 flex items-center relative cursor-pointer overflow-visible h-32 hover:opacity-90 transition-opacity`}
             >
-              <span className="text-white text-3xl font-semibold z-10">
+              <span className={`text-white text-3xl font-semibold z-10 ${index % 2 === 1 ? 'ml-auto' : ''}`}>
                 {lesson.title}
               </span>
               <img 
                 src={lesson.avatar} 
                 alt="Avatar" 
-                className="absolute right-0 -top-20 w-40 h-52 object-cover"
+                className={`absolute ${index % 2 === 0 ? 'right-0' : 'left-0'} -top-20 w-40 h-52 object-cover`}
               />
             </div>
           ))}
