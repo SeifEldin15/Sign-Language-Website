@@ -9,7 +9,8 @@ import {
   HandRaisedIcon,
   MoonIcon,
   PaperAirplaneIcon,
-  RocketLaunchIcon
+  RocketLaunchIcon,
+  HandThumbUpIcon
 } from '@heroicons/react/24/outline';
 import { MdOutlineNightlight  } from "react-icons/md";
 import { FaRegHandPaper  } from "react-icons/fa";
@@ -17,13 +18,26 @@ import Rocket from '../assets/home2/Isometric Stickers Rocket.png';
 import Paperplane from '../assets/home2/Isometric Stickers Paper Airplane.png';
 import Header from '../components/Header';
 import Heroimg from '../assets/home2/heroimg.png';
+import { useNavigate } from 'react-router-dom';
+import Sidebar from '../components/Sidebar';
+import { PiHandWavingBold } from "react-icons/pi";
+import { RiHandHeartLine } from "react-icons/ri";
+import { BsEmojiSmile } from "react-icons/bs";
+import { IoHandRightOutline } from "react-icons/io5";
 
 const Home2 = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8 lg:p-12">
+    <>
+    <div className='fixed top-0 left-0'>
+    <Sidebar />
+</div>
+    <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8 lg:p-12 ml-48">
     <Header />
+
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Hero Section */}
         <div className="bg-blue-600 rounded-2xl p-12 mb-8 relative overflow-hidden flex gap-4 justify-around items-center">
           <div className="relative z-10">
@@ -46,7 +60,7 @@ const Home2 = () => {
                 <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Start now</button>
               </div>
             </div>
-            <div className="bg-yellow-300 rounded-2xl p-6">
+            <div className="bg-yellow-300 rounded-2xl p-6" onClick={() => navigate('/question')} style={{ cursor: 'pointer' }}>
               <div className="flex flex-col h-full">
                 <div className="bg-yellow-200 w-12 h-12 rounded-full flex items-center justify-center mb-4">
                   <AcademicCapIcon className="w-6 h-6 text-yellow-600" />
@@ -74,49 +88,52 @@ const Home2 = () => {
             <button className="text-green-400">See All</button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div className="bg-gray-900 rounded-[24px] px-4 py-8 relative">
-              {/* Main border with gradient fade */}
-              <div className="absolute inset-0 rounded-[14px] border-2 border-white/70" style={{
-                maskImage: 'linear-gradient(to top right, black 80%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to top right, black 80%, transparent 100%)'
-              }}></div>
-              
-              <div className="relative">
-                <div className="flex justify-between">
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mb-2">
-                      <FaRegHandPaper className="w-6 h-6 text-gray-100 " />
-                    </div>
-                    <span className="text-2xl font-medium text-gray-100 ml-2">How Are You</span>
-                  </div>
-                  <img src={Rocket} alt="Rocket" className="w-24 h-24 mt-4" />
-                </div>
+            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+              <div className="w-16 h-16 mb-4 flex items-center justify-center">
+                <PiHandWavingBold className="w-12 h-12 text-white" />
               </div>
+              <span className="text-2xl text-white">Hello</span>
             </div>
 
-            <div className="bg-gray-900 rounded-[24px] px-4 py-8 relative">
-              {/* Main border with gradient fade */}
-              <div className="absolute inset-0 rounded-[14px] border-2 border-white/70" style={{
-                maskImage: 'linear-gradient(to top right, black 80%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to top right, black 80%, transparent 100%)'
-              }}></div>
-              
-              <div className="relative">
-                <div className="flex justify-between">
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mb-2">
-                      <MdOutlineNightlight className="w-7 h-7 text-gray-100" />
-                    </div>
-                    <span className="text-2xl font-medium text-white ml-2">Good night</span>
-                  </div>
-                  <img src={Paperplane} alt="Paper Airplane" className="w-24 h-24 mt-4" />
-                </div>
+            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+              <div className="w-16 h-16 mb-4 flex items-center justify-center">
+                <RiHandHeartLine className="w-12 h-12 text-white" />
               </div>
+              <span className="text-2xl text-white">Thank You</span>
+            </div>
+
+            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+              <div className="w-16 h-16 mb-4 flex items-center justify-center">
+                <BsEmojiSmile className="w-12 h-12 text-white" />
+              </div>
+              <span className="text-2xl text-white">How Are You</span>
+            </div>
+
+            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+              <div className="w-16 h-16 mb-4 flex items-center justify-center">
+                <IoHandRightOutline className="w-12 h-12 text-white" />
+              </div>
+              <span className="text-2xl text-white">Please</span>
+            </div>
+
+            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+              <div className="w-16 h-16 mb-4 flex items-center justify-center">
+                <HandThumbUpIcon className="w-12 h-12 text-white" />
+              </div>
+              <span className="text-2xl text-white">Good</span>
+            </div>
+
+            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+              <div className="w-16 h-16 mb-4 flex items-center justify-center">
+                <MoonIcon className="w-12 h-12 text-white" />
+              </div>
+              <span className="text-2xl text-white">Good Night</span>
             </div>
           </div>
         </div>
       </div>
     </div>
+    </>
   );
 };
 
