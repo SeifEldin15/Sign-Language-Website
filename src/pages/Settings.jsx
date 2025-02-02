@@ -9,6 +9,7 @@ import {
   ArrowRightOnRectangleIcon,
   ChevronRightIcon
 } from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
 
 const Settings = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -41,8 +42,9 @@ const Settings = () => {
           {/* Menu Items */}
           <div className="space-y-3">
             {menuItems.map((item, index) => (
-              <button
+              <Link
                 key={index}
+                to={item.href}
                 className="w-full flex items-center justify-between p-4 bg-[#293D46] rounded-xl hover:bg-gray-700/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
@@ -50,7 +52,7 @@ const Settings = () => {
                   <span className="text-white">{item.label}</span>
                 </div>
                 <ChevronRightIcon className="w-5 h-5 text-gray-400" />
-              </button>
+              </Link>
             ))}
 
             {/* Theme Toggle */}
