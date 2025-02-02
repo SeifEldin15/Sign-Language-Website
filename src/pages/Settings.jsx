@@ -15,7 +15,7 @@ const Settings = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   const menuItems = [
-    { icon: BookmarkIcon, label: "Saved words", href: "/saved" },
+    { icon: BookmarkIcon, label: "Saved words", href: "/bookmarks" },
     { icon: UserIcon, label: "Edit Profile", href: "/profile" },
     { icon: InformationCircleIcon, label: "About us", href: "/about" },
     { icon: ChatBubbleLeftRightIcon, label: "Contact us", href: "/contact" },
