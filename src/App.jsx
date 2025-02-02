@@ -9,6 +9,7 @@ import QuestionPage from './pages/QuestionPage'
 import Home2 from './pages/Home2'
 import Settings from './pages/Settings'
 import Dictionary from './pages/Dictionary'
+import Bookmarks from './pages/Bookmarks'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/question" element={<QuestionPage />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/dictionary" element={<Dictionary />} />
+        <Route path="/bookmarks" element={<Bookmarks />} />
       </Routes>
     </BrowserRouter>
     </>
