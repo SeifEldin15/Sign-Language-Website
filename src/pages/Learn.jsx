@@ -13,7 +13,7 @@ const Learn = () => {
     { title: 'Welcome1', color: 'bg-green-500', avatar: avatar1 },
     { title: 'Welcome2', color: 'bg-purple-500', avatar: avatar2 },
     { title: 'Basic Greeting', color: 'bg-blue-500', avatar: avatar3 },
-    { title: 'Personal Pronouns', color: 'bg-yellow-500', avatar: avatar4 },
+    { title: 'Pronouns', color: 'bg-yellow-500', avatar: avatar4 },
   ];
 
   return (
