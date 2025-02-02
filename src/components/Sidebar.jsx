@@ -17,6 +17,10 @@ const Sidebar = () => {
 
   return (
     <div className="md:h-screen md:w-64 w-full bg-[#141F23] md:p-6 p-3 border-t md:border-r border-gray-700">
+      <div className="mb-8 hidden md:block">
+        <h1 className="logo-glow text-3xl font-extrabold font-['Feather Bold']">Synthima</h1>
+      </div>
+
       <nav>
         <ul className="md:space-y-6 flex md:flex-col justify-around md:justify-start">
           {menuItems.map((item, index) => {
