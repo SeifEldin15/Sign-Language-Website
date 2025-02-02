@@ -30,10 +30,10 @@ const Home2 = () => {
 
   return (
     <>
-    <div className='fixed top-0 left-0'>
-    <Sidebar />
-</div>
-    <div className="min-h-screen bg-[#141F23] text-white p-4 md:p-8 lg:p-12 ml-48 relative overflow-hidden">
+    <div className='fixed top-0 left-0 h-screen'>
+      <Sidebar />
+    </div>
+    <div className="min-h-screen bg-[#141F23] text-white p-4 md:p-8 lg:p-12 ml-64 relative overflow-hidden">
       {/* Add gradient beam */}
       
       <Header />
