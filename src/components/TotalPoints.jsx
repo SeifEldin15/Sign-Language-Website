@@ -15,10 +15,10 @@ const TotalPoints = ({ totalPoints, totalQuestions }) => {
             : "Great effort! Keep practicing to improve your score."}
         </p>
         <button
-          onClick={() => window.location.href = '/'}
+          onClick={() => window.location.href = '/learn'}
           className="bg-[#58cc02] text-white px-8 py-3 rounded-lg hover:bg-[#4fb502] transition-colors"
         >
-          Return to Home
+          Continue Learning
         </button>
       </div>
     </div>
