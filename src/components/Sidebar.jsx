@@ -2,12 +2,10 @@ import React from 'react';
 
 const Sidebar = () => {
   const menuItems = [
-    { icon: "https://d35aaqx5ub95lt.cloudfront.net/vendor/784035717e2ff1d448c0f6cc4efc89fb.svg", label: "LEARN" },
-    { icon: "https://d35aaqx5ub95lt.cloudfront.net/vendor/ca9178510134b4b0893dbac30b6670aa.svg", label: "LEADERBOARDS" },
-    { icon: "https://d35aaqx5ub95lt.cloudfront.net/vendor/7ef36bae3f9d68fc763d3451b5167836.svg", label: "QUESTS" },
-    { icon: "https://d35aaqx5ub95lt.cloudfront.net/vendor/0e58a94dda219766d98c7796b910beee.svg", label: "SHOP" },
-    { icon: "https://d35aaqx5ub95lt.cloudfront.net/vendor/24e0dcdc06870ead47b3600f0d41eb5b.svg", label: "PROFILE" },
-    { icon: "https://d35aaqx5ub95lt.cloudfront.net/vendor/7159c0b5d4250a5aea4f396d53f17f0c.svg", label: "MORE" },
+    { icon: "home", label: "HOME" },
+    { icon: "book", label: "DICTIONARY" },
+    { icon: "notebook", label: "LEARN" },
+    { icon: "grid", label: "SETTINGS" }
   ];
 
   return (
@@ -17,23 +15,26 @@ const Sidebar = () => {
       </div>
 
       <nav>
-        <ul className="space-y-4">
+        <ul className="space-y-6">
           {menuItems.map((item, index) => (
             <li key={index}>
               <a
                 href="#"
-                className={`flex items-center space-x-4 py-2 px-4 rounded-lg ${
-                  item.label === "LEARN" 
-                    ? "bg-[#1c4455] hover:bg-[#1c4455] border border-[#0085CC]" 
-                    : "hover:bg-gray-800"
-                } transition-colors`}
+                className="flex items-center space-x-4 px-3 py-2 rounded-lg hover:bg-gray-800"
               >
-                <img src={item.icon} alt={item.label} className="text-xl w-8 h-8" />
+                <div className={`w-7 h-7 flex items-center justify-center
+                  ${item.label === "LEARN" ? "text-[#58cc02]" : "text-gray-400"}`}
+                >
+                  {item.icon === "home" && <div className="w-6 h-6 border-[1.5px] border-current relative -top-[2px]"><div className="w-3 h-2 border-[1.5px] border-current mx-auto -bottom-[2px]"></div></div>}
+                  {item.icon === "book" && <div className="w-6 h-6 border-[1.5px] border-current p-[3px]"><div className="w-3 h-[2px] bg-current mb-[3px]"></div><div className="w-3 h-[2px] bg-current"></div></div>}
+                  {item.icon === "notebook" && <div className="w-6 h-6 border-[1.5px] border-current p-[3px]"><div className="w-3 h-[2px] bg-current mb-[3px]"></div><div className="w-2 h-[2px] bg-current"></div></div>}
+                  {item.icon === "grid" && <div className="grid grid-cols-2 gap-[3px]"><div className="w-2.5 h-2.5 border-[1.5px] border-current"></div><div className="w-2.5 h-2.5 border-[1.5px] border-current"></div><div className="w-2.5 h-2.5 border-[1.5px] border-current"></div><div className="w-2.5 h-2.5 border-[1.5px] border-current"></div></div>}
+                </div>
                 <span className={`${
                   item.label === "LEARN" 
-                    ? "text-[#4ac6ff] " 
-                    : "text-white"
-                } font-bold text-sm`}>
+                    ? "text-[#58cc02]" 
+                    : "text-gray-400"
+                } text-sm`}>
                   {item.label}
                 </span>
               </a>

@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Lesson from './pages/lesson'
 import QuestionPage from './pages/questionPage'
 import Home2 from './pages/home2'
-
+import Settings from './pages/Settings'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -18,10 +18,11 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/home2" element={<Learn />} />
+        <Route path="/learn" element={<Learn />} />
         <Route path="/" element={<Home2 />} />
         <Route path="/lesson" element={<Lesson />} />
         <Route path="/question" element={<QuestionPage />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
     </>
