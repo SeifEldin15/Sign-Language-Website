@@ -8,6 +8,7 @@ import TotalPoints from '../components/TotalPoints';
 import CorrectPopup from '../components/CorrectPopup';
 import IncorrectPopup from '../components/IncorrectPopup';
 import SkippedPopup from '../components/SkippedPopup';
+import Sidebar from '../components/Sidebar';
 
 const QuestionPage = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -122,7 +123,12 @@ const QuestionPage = () => {
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <div className="min-h-screen bg-gray-900 pt-12">
+    <>
+    <div className='fixed top-0 left-0'>
+      <Sidebar />
+    </div>
+
+    <div className="min-h-screen bg-[#141F23] pt-12 ml-64">
       <ProgressHeader 
         lives={lives} 
         currentQuestion={currentQuestionIndex + 1} 
@@ -199,6 +205,7 @@ const QuestionPage = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

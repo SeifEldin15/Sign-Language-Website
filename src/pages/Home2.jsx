@@ -33,8 +33,10 @@ const Home2 = () => {
     <div className='fixed top-0 left-0'>
     <Sidebar />
 </div>
-    <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8 lg:p-12 ml-48">
-    <Header />
+    <div className="min-h-screen bg-[#141F23] text-white p-4 md:p-8 lg:p-12 ml-48 relative overflow-hidden">
+      {/* Add gradient beam */}
+      
+      <Header />
 
       {/* Main Content */}
       <div className="max-w-5xl mx-auto">
@@ -60,7 +62,7 @@ const Home2 = () => {
                 <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Start now</button>
               </div>
             </div>
-            <div className="bg-yellow-300 rounded-2xl p-6" onClick={() => navigate('/question')} style={{ cursor: 'pointer' }}>
+            <div className="bg-yellow-300 rounded-2xl p-6" onClick={() => navigate('/learn')} style={{ cursor: 'pointer' }}>
               <div className="flex flex-col h-full">
                 <div className="bg-yellow-200 w-12 h-12 rounded-full flex items-center justify-center mb-4">
                   <AcademicCapIcon className="w-6 h-6 text-yellow-600" />
@@ -69,7 +71,7 @@ const Home2 = () => {
                 <ChevronRightIcon className="w-6 h-6 text-gray-800 self-end mt-4" />
               </div>
             </div>
-            <div className="bg-gray-100 rounded-2xl p-6">
+            <div className="bg-gray-100 rounded-2xl p-6" onClick={() => navigate('/dictionary')} style={{ cursor: 'pointer' }}>
               <div className="flex flex-col h-full">
                 <div className="bg-gray-200 w-12 h-12 rounded-full flex items-center justify-center mb-4">
                   <BookOpenIcon className="w-6 h-6 text-gray-600" />
@@ -85,45 +87,45 @@ const Home2 = () => {
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl">Common words</h2>
-            <button className="text-green-400">See All</button>
+            <button className="text-green-400" onClick={() => navigate('/commonwords')}>See All</button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+            <div className="bg-[#293D46] rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
               <div className="w-16 h-16 mb-4 flex items-center justify-center">
                 <PiHandWavingBold className="w-12 h-12 text-white" />
               </div>
               <span className="text-2xl text-white">Hello</span>
             </div>
 
-            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+            <div className="bg-[#293D46] rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
               <div className="w-16 h-16 mb-4 flex items-center justify-center">
                 <RiHandHeartLine className="w-12 h-12 text-white" />
               </div>
               <span className="text-2xl text-white">Thank You</span>
             </div>
 
-            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+            <div className="bg-[#293D46] rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
               <div className="w-16 h-16 mb-4 flex items-center justify-center">
                 <BsEmojiSmile className="w-12 h-12 text-white" />
               </div>
               <span className="text-2xl text-white">How Are You</span>
             </div>
 
-            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+            <div className="bg-[#293D46] rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
               <div className="w-16 h-16 mb-4 flex items-center justify-center">
                 <IoHandRightOutline className="w-12 h-12 text-white" />
               </div>
               <span className="text-2xl text-white">Please</span>
             </div>
 
-            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+            <div className="bg-[#293D46] rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
               <div className="w-16 h-16 mb-4 flex items-center justify-center">
                 <HandThumbUpIcon className="w-12 h-12 text-white" />
               </div>
               <span className="text-2xl text-white">Good</span>
             </div>
 
-            <div className="bg-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
+            <div className="bg-[#293D46] rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-700 transition-colors">
               <div className="w-16 h-16 mb-4 flex items-center justify-center">
                 <MoonIcon className="w-12 h-12 text-white" />
               </div>

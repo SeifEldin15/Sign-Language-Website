@@ -10,6 +10,8 @@ import Home2 from './pages/Home2'
 import Settings from './pages/Settings'
 import Dictionary from './pages/Dictionary'
 import Bookmarks from './pages/Bookmarks'
+import DictionaryCategories from './components/DictionaryCategories'
+import Commonwords from './pages/Commonwords'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -25,7 +27,9 @@ function App() {
         <Route path="/lesson" element={<Lesson />} />
         <Route path="/question" element={<QuestionPage />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/dictionary" element={<Dictionary />} />
+        <Route path="/dictionary" element={<DictionaryCategories />} />
+        <Route path="/commonwords" element={<Commonwords />} />
+        <Route path="/dictionary/:category" element={<Dictionary />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
       </Routes>
     </BrowserRouter>

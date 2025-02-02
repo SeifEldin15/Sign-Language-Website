@@ -21,13 +21,17 @@ const Settings = () => {
   ];
 
   return (
-    <div className="flex min-h-screen bg-gray-900">
-      <Sidebar />
-      <main className="flex-1 p-8">
-        <div className="max-w-2xl mx-auto">
+    <div className="flex min-h-screen bg-[#141F23]">
+      <div className="fixed top-0 left-0">
+    <Sidebar />
+</div>
+      <main className="flex-1 p-4 md:p-8 lg:p-12 relative overflow-hidden ml-48">
+        {/* Add gradient beam */}
+        
+        <div className="max-w-2xl mx-auto relative z-10">
           {/* Profile Section */}
           <div className="mb-8 flex items-center gap-4">
-            <div className="w-16 h-16 bg-blue-400 rounded-full flex items-center justify-center text-white text-2xl font-semibold">
+            <div className="w-16 h-16 bg-[#365148] rounded-full flex items-center justify-center text-white text-2xl font-semibold">
               DO
             </div>
             <div>
@@ -41,7 +45,7 @@ const Settings = () => {
             {menuItems.map((item, index) => (
               <button
                 key={index}
-                className="w-full flex items-center justify-between p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors"
+                className="w-full flex items-center justify-between p-4 bg-[#293D46] rounded-xl hover:bg-gray-700/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <item.icon className="w-6 h-6 text-gray-400" />
@@ -54,7 +58,7 @@ const Settings = () => {
             {/* Theme Toggle */}
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="w-full flex items-center justify-between p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors"
+              className="w-full flex items-center justify-between p-4 bg-[#293D46] rounded-xl hover:bg-gray-700/50 transition-colors"
             >
               <div className="flex items-center gap-3">
                 <SunIcon className="w-6 h-6 text-gray-400" />
@@ -65,7 +69,7 @@ const Settings = () => {
             </button>
 
             {/* Logout Button */}
-            <button className="w-full flex items-center justify-between p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors">
+            <button className="w-full flex items-center justify-between p-4 bg-[#293D46] rounded-xl hover:bg-gray-700/50 transition-colors">
               <div className="flex items-center gap-3">
                 <ArrowRightOnRectangleIcon className="w-6 h-6 text-gray-400" />
                 <span className="text-white">Logout</span>

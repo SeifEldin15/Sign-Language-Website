@@ -1,11 +1,23 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { BookmarkIcon } from "@heroicons/react/24/outline";
 
-function Bookmarks() {
-  // Add state for search and words list
+function Commonwords() {
   const [searchQuery, setSearchQuery] = useState("");
-  const words = ["welcome", "how are you", "thanks", "good", "bad", "bye", "watch", "eat", "drink"];
+  
+  // This is a sample word list - you should replace it with category-specific words
+  const categoryWords = {
+    intro: ["hello", "my name is", "nice to meet you", "I am", "pleased to meet you"],
+    body: ["eye", "nose", "mouth", "hand", "leg", "arm"],
+    conversations: ["how are you", "good morning", "good evening", "thank you"],
+    time: ["today", "tomorrow", "yesterday", "morning", "evening"],
+    places: ["hospital", "school", "restaurant", "park", "library"],
+    objects: ["book", "phone", "computer", "chair", "table"],
+  };
+
+  // Combine all words into a single array
+  const words = Object.values(categoryWords).flat();
 
   // Filter words based on search query
   const filteredWords = words.filter(word =>
@@ -14,11 +26,11 @@ function Bookmarks() {
 
   return (
     <div className="flex min-h-screen bg-[#141F23]">
-<div className="fixed top-0 left-0">
+      <div className="fixed top-0 left-0">
     <Sidebar />
 </div>
       <main className="flex-1 p-4 md:p-8 lg:p-12 relative overflow-hidden ml-48">
- 
+        {/* Add gradient beam */}
         
         <div className="max-w-2xl mx-auto relative z-10">
           {/* Search Bar */}
@@ -28,7 +40,7 @@ function Bookmarks() {
               placeholder="Search for a Word"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full p-4 bg-gray-800/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#365148]"
+              className="w-full p-4 bg-[#293D46] rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#365148]"
             />
           </div>
 
@@ -37,10 +49,10 @@ function Bookmarks() {
             {filteredWords.map((word, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-4 bg-gray-800/50 rounded-xl hover:bg-gray-700/50 transition-colors"
+                className="flex items-center justify-between p-4 bg-[#293D46] rounded-xl hover:bg-gray-700/50 transition-colors"
               >
                 <span className="text-white">{word}</span>
-                <BookmarkIcon className="w-6 h-6 text-gray-400 hover:text-white cursor-pointer" />
+                <BookmarkIcon className="w-6 h-6 text-gray-400 hover:text-[#365148] cursor-pointer" />
               </div>
             ))}
             
@@ -57,4 +69,5 @@ function Bookmarks() {
   );
 }
 
-export default Bookmarks;
+export default Commonwords;
+    

@@ -1,66 +1,47 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-import LessonCard from '../components/LessonCard';
-import RightSideBar from '../components/RightSideBar';
-import LessonInfoCard from '../components/LessonInfoCard';
+import avatar1 from '../assets/avatar/static_thumbs_up.png';
+import avatar2 from '../assets/avatar/static_pointing_fingers.png';
+import avatar3 from '../assets/avatar/static_point_up.png';
+import avatar4 from '../assets/avatar/static_crossing_hands1.png';
 
 const Learn = () => {
-  function LessonList() {
-    const lessons = [
-      {
-        level: "A1",
-        title: "Newcomer I (A1.1)",
-        units: "14",
-        description: "Learn how to introduce yourself and answer simple questions about your basic needs.",
-        isActive: false
-      },
-      {
-        level: "A1",  
-        title: "Newcomer II (A1.2)",
-        units: "11",
-        description: "Learn how to engage in short conversations about yourself, your everyday life, and your hobbies.",
-        isActive: true
-      },
-      {
-        level: "A2",
-        title: "Beginner I (A2.1)",
-        units: "12",
-        description: "Learn how to express preferences, past experiences and basic explanations in conversation with others.",
-        isActive: false,
-        isLocked: true
-      }
-    ];
-
-    return (
-      <div className=" mx-auto pt-6  ">
-        {lessons.map((lesson, index) => (
-          <LessonCard
-            key={index}
-            level={lesson.level}
-            title={lesson.title}
-            units={lesson.units}
-            description={lesson.description}
-            isActive={lesson.isActive}
-            isLocked={lesson.isLocked}
-          />
-        ))}
-      </div>
-    );
-  }
+  const navigate = useNavigate();
+  
+  const lessons = [
+    { title: 'Welcome1', color: 'bg-green-500', avatar: avatar1 },
+    { title: 'Welcome2', color: 'bg-purple-500', avatar: avatar2 },
+    { title: 'Basic Greeting', color: 'bg-blue-500', avatar: avatar3 },
+    { title: 'Personal Pronouns', color: 'bg-yellow-500', avatar: avatar4 },
+  ];
 
   return (
-    <div className='flex bg-gray-900 w-full pr-16'>
-      <Sidebar />
-      <div className="flex-1 max-w-3xl mx-auto pt-6 px-8 ml-2">
-        <LessonInfoCard 
-          sectionNumber={1}
-          unitNumber={1}
-          lessonTitle="Order in a cafe"
-        />
-        <LessonList />
+    <>
+      <div className='fixed top-0 left-0'>
+        <Sidebar />
       </div>
-      <RightSideBar />
-    </div>
+      <div className='w-full h-screen bg-[#141F23] p-6 overflow-y-auto'>
+        <div className='max-w-2xl mx-auto space-y-16 pt-24'>
+          {lessons.map((lesson, index) => (
+            <div 
+              key={index} 
+              onClick={() => navigate('/question')}
+              className={`${lesson.color} rounded-xl p-6 flex items-center relative cursor-pointer overflow-visible h-32 hover:opacity-90 transition-opacity`}
+            >
+              <span className="text-white text-3xl font-semibold z-10">
+                {lesson.title}
+              </span>
+              <img 
+                src={lesson.avatar} 
+                alt="Avatar" 
+                className="absolute right-0 -top-20 w-40 h-52 object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 

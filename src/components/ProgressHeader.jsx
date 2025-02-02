@@ -1,7 +1,7 @@
 // components/ProgressHeader.jsx
 import React from 'react';
 
-const ProgressHeader = ({ lives, currentQuestion, totalQuestions, showQuestion }) => {
+const ProgressHeader = ({ currentQuestion, totalQuestions, showQuestion }) => {
   // Calculate progress percentage
   // If showing the question (Start Answer page), progress is 0
   // Otherwise, calculate based on current question
@@ -11,24 +11,15 @@ const ProgressHeader = ({ lives, currentQuestion, totalQuestions, showQuestion }
 
   return (
     <div className="flex items-center justify-between mb-10 max-w-5xl mx-auto">
-      <button className="text-gray-500 hover:text-white mx-4">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
       <div className="flex-1 mx-4">
-        <div className="h-5 bg-gray-700/30 rounded-full">
+        <div className="h-5 bg-[#293D46] rounded-full">
           <div 
-            className="h-full bg-[#1a9de6] rounded-full transition-all duration-300 relative"
+            className="h-full bg-[#58cc02] rounded-full transition-all duration-300 relative"
             style={{ width: `${progressPercentage}%` }}
           >
-            <div className="absolute top-1 left-1 right-0 h-[20%] bg-[#4ac6ff]/20 rounded-full w-[95%]"></div>
+            <div className="absolute top-1 left-1 right-0 h-[20%] bg-[#76e002]/20 rounded-full w-[95%]"></div>
           </div>
         </div>
-      </div>
-      <div className="flex items-center">
-        <span className="text-red-500 text-2xl">❤️</span>
-        <span className="text-red-500 ml-2">{lives}</span>
       </div>
     </div>
   );

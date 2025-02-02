@@ -3,7 +3,7 @@ import { BellIcon } from "@heroicons/react/24/outline";
 import Image2 from '../assets/home2/Ellipse 11.png';
 const Header = () => {
   return (
-    <div className="max-w-5xl mx-auto mb-8">
+    <div className="max-w-5xl mx-auto mb-8 bg-[#141F23]">
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
         <img 
