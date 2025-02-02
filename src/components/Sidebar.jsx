@@ -16,13 +16,13 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="h-screen w-64 bg-[#141F23] p-6 border-r border-gray-700">
-      <div className="mb-8">
+    <div className="md:h-screen md:w-64 w-full bg-[#141F23] md:p-6 p-3 border-t md:border-r border-gray-700">
+      <div className="mb-8 hidden md:block">
         <h1 className="text-[#58cc02] text-2xl font-bold">Logo</h1>
       </div>
 
       <nav>
-        <ul className="space-y-6">
+        <ul className="md:space-y-6 flex md:flex-col justify-around md:justify-start">
           {menuItems.map((item, index) => {
             const isActive = item.href === "/"
               ? location.pathname === item.href
@@ -32,7 +32,7 @@ const Sidebar = () => {
               <li key={index}>
                 <a
                   href={item.href}
-                  className="flex items-center space-x-4 px-3 py-2 rounded-lg hover:bg-gray-800"
+                  className="flex md:flex-row flex-col items-center md:space-x-4 px-3 py-2 rounded-lg hover:bg-gray-800"
                 >
                   <div className={`w-7 h-7 flex items-center justify-center
                     ${isActive ? "text-[#58cc02]" : "text-gray-400"}`}
@@ -47,7 +47,7 @@ const Sidebar = () => {
                     isActive 
                       ? "text-[#58cc02]" 
                       : "text-gray-400"
-                  } text-sm`}>
+                  } text-xs md:text-sm`}>
                     {item.label}
                   </span>
                 </a>
