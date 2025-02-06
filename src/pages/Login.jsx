@@ -10,14 +10,14 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1E1E1E] via-[#232323] to-[#282828] flex items-center justify-center px-4 h-screen">
-      <div className="max-w-md w-full space-y-6 p-6 bg-[#1E1E1E] rounded-3xl">
+    <div className="min-h-screen bg-[#141F23] flex items-center justify-center px-4 h-screen">
+      <div className="max-w-md w-full space-y-6 p-6 bg-[#293D46] rounded-3xl">
         <div>
-          <h2 className="text-[28px] font-bold bg-gradient-to-r from-green-300 to-green-500 inline-block text-transparent bg-clip-text">
+          <h2 className="text-[28px] font-bold text-white">
             Login
           </h2>
-          <p className="mt-2 text-[#8F8F8F] text-sm">
-            Enter Your Details To Create Your Account
+          <p className="mt-2 text-gray-300 text-sm">
+            Enter Your Details To Access Your Account
           </p>
         </div>
         
@@ -27,7 +27,7 @@ const Login = () => {
               <input
                 type="text"
                 required
-                className="w-full px-4 py-3.5 bg-[#2C2C2C] rounded-lg text-white placeholder-[#8F8F8F] text-sm focus:outline-none"
+                className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Email"
               />
             </div>
@@ -36,7 +36,7 @@ const Login = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 required
-                className="w-full px-4 py-3.5 bg-[#2C2C2C] rounded-lg text-white placeholder-[#8F8F8F] text-sm focus:outline-none"
+                className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Password"
               />
               <button

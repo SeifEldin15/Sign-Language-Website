@@ -18,13 +18,13 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1E1E1E] via-[#232323] to-[#282828] flex items-center justify-center px-4 h-screen">
-      <div className="max-w-md w-full space-y-6 p-6 bg-[#1E1E1E] rounded-3xl">
+    <div className="min-h-screen bg-[#141F23] flex items-center justify-center px-4 h-screen">
+      <div className="max-w-md w-full space-y-6 p-6 bg-[#293D46] rounded-3xl">
         <div>
-          <h2 className="text-[28px] font-bold bg-gradient-to-r from-green-300 to-green-500 inline-block text-transparent bg-clip-text">
+          <h2 className="text-[28px] font-bold text-white">
             Sign Up
           </h2>
-          <p className="mt-2 text-[#8F8F8F] text-sm">
+          <p className="mt-2 text-gray-300 text-sm">
             Enter Your Details To Create Your Account
           </p>
         </div>
@@ -35,7 +35,7 @@ const Signup = () => {
               <input
                 type="text"
                 required
-                className="w-full px-4 py-3.5 bg-[#2C2C2C] rounded-lg text-white placeholder-[#8F8F8F] text-sm focus:outline-none"
+                className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Email"
               />
             </div>
@@ -44,7 +44,7 @@ const Signup = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 required
-                className="w-full px-4 py-3.5 bg-[#2C2C2C] rounded-lg text-white placeholder-[#8F8F8F] text-sm focus:outline-none"
+                className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Password"
               />
               <button
@@ -52,7 +52,7 @@ const Signup = () => {
                 className="absolute right-3 top-1/2 -translate-y-1/2"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                <svg className="w-5 h-5 text-[#8F8F8F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   {showPassword ? (
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   ) : (
@@ -66,7 +66,7 @@ const Signup = () => {
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 required
-                className="w-full px-4 py-3.5 bg-[#2C2C2C] rounded-lg text-white placeholder-[#8F8F8F] text-sm focus:outline-none"
+                className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Confirm Password"
               />
               <button
@@ -74,7 +74,7 @@ const Signup = () => {
                 className="absolute right-3 top-1/2 -translate-y-1/2"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                <svg className="w-5 h-5 text-[#8F8F8F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   {showConfirmPassword ? (
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   ) : (
@@ -91,7 +91,7 @@ const Signup = () => {
               required
               className="mt-1 w-4 h-4 rounded border-gray-300 text-[#4ADE80] focus:ring-[#4ADE80]"
             />
-            <label className="block text-xs text-[#8F8F8F]">
+            <label className="block text-xs text-gray-300">
               I'm agree to The{' '}
               <Link to="/terms" className="text-[#4ADE80] hover:text-[#3FCF76]">
                 Terms of Service
