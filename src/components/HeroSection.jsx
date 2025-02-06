@@ -13,7 +13,7 @@ const HeroSection = () => {
             <div className="bg-gray-800/50 p-4 rounded-lg max-w-2xl">
               <h3 className="text-lg font-semibold text-blue-400 mb-2">Your Progress</h3>
               <p className="text-gray-300">Current Level: Intermediate Conversation</p>
-              <p className="text-gray-300">Completed Lessons: 24/36</p>
+              <p className="text-gray-300">Completed Lessons: 1/4</p>
             </div>
             <div className="space-y-2">
               <p className="text-gray-300">Next up in your learning path:</p>
@@ -27,9 +27,6 @@ const HeroSection = () => {
           <div className="space-x-4">
             <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors">
               Resume Practice
-            </button>
-            <button className="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-600/10 transition-colors">
-              View Progress Report
             </button>
           </div>
         </div>
