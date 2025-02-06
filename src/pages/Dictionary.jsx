@@ -7,10 +7,20 @@ function Dictionary() {
   const { category } = useParams();
   const [searchQuery, setSearchQuery] = useState("");
   
-  // This is a sample word list - you should replace it with category-specific words
+  // Modified sample word list with image URLs
   const categoryWords = {
-    intro: ["hello", "my name is", "nice to meet you", "I am", "pleased to meet you"],
-    body: ["eye", "nose", "mouth", "hand", "leg", "arm"],
+    intro: [
+      { word: "hello", image: "/images/1.png" },
+      { word: "my name is", image: "/images/2.png" },
+      { word: "nice to meet you", image: "/images/3.png" },
+      { word: "I am", image: "/images/4.png" },
+    ],
+    body: [
+      { word: "eye", image: "/images/1.png" },
+      { word: "nose", image: "/images/2.png" },
+      { word: "mouth", image: "/images/3.png" },
+      { word: "hand", image: "/images/4.png" },
+    ],
     conversations: ["how are you", "good morning", "good evening", "thank you"],
     time: ["today", "tomorrow", "yesterday", "morning", "evening"],
     places: ["hospital", "school", "restaurant", "park", "library"],
@@ -19,9 +29,9 @@ function Dictionary() {
 
   const words = categoryWords[category] || [];
 
-  // Filter words based on search query
-  const filteredWords = words.filter(word =>
-    word.toLowerCase().includes(searchQuery.toLowerCase())
+  // Updated filter to work with new word object structure
+  const filteredWords = words.filter(item =>
+    item.word.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -30,7 +40,7 @@ function Dictionary() {
         <Sidebar />
       </div>
       <div className="min-h-screen bg-[#141F23] p-4 md:p-8 lg:p-12 md:ml-64 relative overflow-hidden pb-24 md:pb-12">
-        <div className="max-w-2xl mx-auto relative z-10">
+        <div className="max-w-4xl mx-auto relative z-10">
           {/* Search Bar */}
           <div className="mb-8">
             <input
@@ -42,19 +52,29 @@ function Dictionary() {
             />
           </div>
 
-          {/* Word List */}
-          <div className="space-y-3">
-            {filteredWords.map((word, index) => (
+          {/* Updated Word List with Images */}
+          <div className="space-y-4">
+            {filteredWords.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-4 bg-[#293D46] rounded-xl hover:bg-gray-700/50 transition-colors"
+                className="relative p-4 bg-[#293D46] rounded-xl hover:bg-gray-700/50 transition-colors"
               >
-                <span className="text-white">{word}</span>
-                <BookmarkIcon className="w-6 h-6 text-gray-400 hover:text-[#365148] cursor-pointer" />
+                <BookmarkIcon className="absolute top-4 right-4 w-6 h-6 text-gray-400 hover:text-[#365148] cursor-pointer" />
+                <div className="flex items-center justify-between px-12 py-4">
+                  <div className="flex-1">
+                    <span className="text-white text-2xl">{item.word}</span>
+                  </div>
+                  <div className="w-32 h-32">
+                    <img
+                      src={item.image}
+                      alt={`Sign for ${item.word}`}
+                      className="w-full h-full object-contain rounded-lg"
+                    />
+                  </div>
+                </div>
               </div>
             ))}
             
-            {/* Show message when no results found */}
             {filteredWords.length === 0 && (
               <div className="text-center text-gray-400 py-4">
                 No words found matching "{searchQuery}"
