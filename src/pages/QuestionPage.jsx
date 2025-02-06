@@ -27,9 +27,9 @@ const QuestionPage = () => {
       id: 1,
       question: "What does this sign mean?",
       options: [
-        { id: 1, text: 'correct' },
-        { id: 2, text: 'incorrect' },
-        { id: 3, text: 'also incorrect' },
+        { id: 1, text: 'Hello how are you' },
+        { id: 2, text: 'Guess the correct answer' },
+        { id: 3, text: 'What’s your name' },
       ],
       correctAnswer: 1
     },
