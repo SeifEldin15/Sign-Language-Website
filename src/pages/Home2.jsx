@@ -24,7 +24,7 @@ import { PiHandWavingBold } from "react-icons/pi";
 import { RiHandHeartLine } from "react-icons/ri";
 import { BsEmojiSmile } from "react-icons/bs";
 import { IoHandRightOutline } from "react-icons/io5";
-
+import HeroSection from '../components/HeroSection';
 const Home2 = () => {
   const navigate = useNavigate();
 
@@ -39,15 +39,10 @@ const Home2 = () => {
       <Header />
 
       {/* Main Content */}
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Hero Section */}
-        <div className="bg-blue-600 rounded-2xl pl-8 pt-8 mb-8 relative overflow-hidden flex gap-4 justify-between items-center">
-          <div className="relative z-10">
-            <h1 className="text-3xl md:text-6xl font-bold mb-2">Speak with your <br /> hands</h1>
-            <p className="text-blue-100 text-xl">Start communicating effectively today</p>
-          </div>
-          <img src={Heroimg} alt="" className='max-w-[300px] max-h-[300px]' />
-        </div>
+        <HeroSection />
+
 
         {/* Services Grid */}
         <div className="mb-8">
