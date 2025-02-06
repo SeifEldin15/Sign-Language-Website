@@ -10,10 +10,10 @@ const Learn = () => {
   const navigate = useNavigate();
   
   const lessons = [
-    { title: 'Welcome1', color: 'bg-green-500', avatar: avatar1 },
-    { title: 'Welcome2', color: 'bg-purple-500', avatar: avatar2 },
-    { title: 'Basic Greeting', color: 'bg-blue-500', avatar: avatar3 },
-    { title: 'Pronouns', color: 'bg-yellow-500', avatar: avatar4 },
+    { title: 'Welcome1', color: 'bg-green-500', avatar: avatar1, locked: false },
+    { title: 'Welcome2', color: 'bg-purple-500', avatar: avatar2, locked: true },
+    { title: 'Basic Greeting', color: 'bg-blue-500', avatar: avatar3, locked: true },
+    { title: 'Pronouns', color: 'bg-yellow-500', avatar: avatar4, locked: true },
   ];
 
   return (
@@ -26,11 +26,14 @@ const Learn = () => {
           {lessons.map((lesson, index) => (
             <div 
               key={index} 
-              onClick={() => navigate('/question')}
-              className={`${lesson.color} rounded-xl p-6 flex items-center relative cursor-pointer overflow-visible h-32 hover:opacity-90 transition-opacity`}
+              onClick={() => !lesson.locked && navigate('/question')}
+              className={`${lesson.color} rounded-xl p-6 flex items-center relative 
+                ${!lesson.locked ? 'cursor-pointer hover:opacity-90' : 'cursor-not-allowed opacity-50'} 
+                overflow-visible h-32 transition-opacity`}
             >
               <span className={`text-white text-3xl font-semibold z-10 ${index % 2 === 1 ? 'ml-auto' : ''}`}>
                 {lesson.title}
+                {lesson.locked && ' 🔒'}
               </span>
               <img 
                 src={lesson.avatar} 
