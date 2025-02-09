@@ -14,6 +14,19 @@ const port =process.env.PORT ||  3000
 app.use(express.json())
 app.use('/uploads', express.static('uploads'));
 app.use(cors())
+
+// Add detailed request logging middleware
+app.use((req, res, next) => {
+    console.log('Incoming request:', {
+        method: req.method,
+        url: req.url,
+        path: req.path,
+        body: req.body,
+        headers: req.headers
+    });
+    next();
+});
+
 bootstrap(app)
 
 

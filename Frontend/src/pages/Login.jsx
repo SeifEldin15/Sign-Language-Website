@@ -1,12 +1,49 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+    setError('');
+    console.log('Attempting login with:', {
+        email: formData.email,
+        passwordLength: formData.password.length
+    });
+    
+    try {
+        const response = await axios.post('http://localhost:3000/api/auth/signin', formData);
+        console.log('Login response:', response.data);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        navigate('/');
+    } catch (error) {
+        console.error('Login error details:', {
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            message: error.response?.data?.message,
+            error: error.message
+        });
+        setError(
+            error.response?.data?.message || 
+            'Unable to login. Please check your credentials and try again.'
+        );
+    }
   };
 
   return (
@@ -21,12 +58,21 @@ const Login = () => {
           </p>
         </div>
         
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <span className="block sm:inline">{error}</span>
+          </div>
+        )}
+
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
               <input
                 type="text"
+                name="email"
                 required
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Email"
               />
@@ -35,7 +81,10 @@ const Login = () => {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                name="password"
                 required
+                value={formData.password}
+                onChange={handleChange}
                 className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Password"
               />
@@ -65,7 +114,7 @@ const Login = () => {
             type="submit"
             className="w-full py-3.5 px-4 mt-2 rounded-lg text-black bg-[#4ADE80] hover:bg-[#3FCF76] transition-colors text-sm font-medium"
           >
-            create account
+            Login
           </button>
         </form>
       </div>

@@ -10,7 +10,7 @@ const authRouter = Router()
 authRouter.post('/signup', signup)
 // authRouter.post('/signup',Validate(signupVal),checkEmail,signup)
 
-authRouter.post('/signin',Validate(signinVal),signin)
+authRouter.post('/signin', Validate(signinVal), signin)
 authRouter.patch('/changepassword',Validate(changePasswordVal),changeUserPassword)
 
 export default authRouter   

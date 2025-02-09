@@ -42,11 +42,14 @@ const signup = catchError(async(req,res,next)=>{
             return next(new AppError('Email already exists', 400));
         }
 
-        // Create new user
+        // Hash password before creating user
+        const hashedPassword = bcrypt.hashSync(password, 10);
+
+        // Create new user with hashed password
         const user = new User({
             name,
             email,
-            password
+            password: hashedPassword
         });
         
         await user.save();
@@ -72,16 +75,36 @@ const signup = catchError(async(req,res,next)=>{
     }
 })
 
-const signin =catchError( async(req,res,next)=>{
-    let user =await User.findOne({email : req.body.email})
-    if(!user) return next(new AppError('Email or Password incorrect ..',404))
+const signin = catchError(async(req, res, next) => {
+    console.log('Signin attempt with:', {
+        email: req.body.email,
+        hasPassword: !!req.body.password
+    });
+    
+    let user = await User.findOne({email: req.body.email})
+    if(!user) {
+        console.log('User not found with email:', req.body.email);
+        return next(new AppError('Email or Password incorrect..', 404))
+    }
 
-    let match = bcrypt.compareSync(req.body.password , user.password )
-    if(!match) return next(new AppError('Email or Password incorrect ..',404))
+    let match = bcrypt.compareSync(req.body.password, user.password)
+    if(!match) {
+        console.log('Password mismatch for user:', req.body.email);
+        return next(new AppError('Email or Password incorrect..', 404))
+    }
 
-jwt.sign({userId:user._id , name:user.name, role:user.role }, process.env.SECRET_KEY , (err,token)=>{
-    res.status(200).json({message:"Login Successfully  ..", token, user }  )
-})})
+    jwt.sign(
+        {userId: user._id, name: user.name, role: user.role},
+        process.env.SECRET_KEY,
+        (err, token) => {
+            if (err) {
+                console.log('JWT signing error:', err);
+                return next(new AppError('Error generating token', 500));
+            }
+            res.status(200).json({message: "Login Successfully..", token, user})
+        }
+    )
+})
     
 const changeUserPassword =catchError( async(req,res,next)=>{
     let user =await User.findOne({email : req.body.email})
