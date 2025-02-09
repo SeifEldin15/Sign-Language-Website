@@ -13,7 +13,11 @@ const app = express()
 const port =process.env.PORT ||  3000
 app.use(express.json())
 app.use('/uploads', express.static('uploads'));
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173', // Replace with your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 
 // Add detailed request logging middleware
 app.use((req, res, next) => {
