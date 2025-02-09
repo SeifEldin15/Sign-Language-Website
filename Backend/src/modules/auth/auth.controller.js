@@ -4,11 +4,72 @@ import { catchError } from '../../middlewares/catchError.js'
 import { AppError } from '../../utils/appError.js'
 import { User } from '../../../DB/models/user.schema.js'
 
-const signup =catchError( async(req,res,next)=>{    
-    // req.body.profile_Picture=req.file.filename
-    let user = new User(req.body)
-    await user.save()
-    res.status(201).json({message:"User Created .." , user})
+const signup = catchError(async(req,res,next)=>{    
+    console.log('Raw request body:', req.body);
+    
+    const { name, email, password, repassword } = req.body;
+    
+    console.log('Parsed data:', {
+        hasName: !!name,
+        hasEmail: !!email,
+        passwordLength: password?.length,
+        repasswordLength: repassword?.length,
+        passwordsMatch: password === repassword
+    });
+
+    // Validate required fields
+    if (!name || !email || !password) {
+        return next(new AppError('Name, email and password are required', 400));
+    }
+
+    if (!repassword) {
+        return next(new AppError('Repassword is required', 400));
+    }
+    
+    // Compare passwords BEFORE any hashing occurs
+    if (password !== repassword) {
+        console.log('Password mismatch details:', {
+            password: password?.substring(0, 3) + '...',
+            repassword: repassword?.substring(0, 3) + '...'
+        });
+        return next(new AppError('Passwords do not match', 400));
+    }
+
+    try {
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return next(new AppError('Email already exists', 400));
+        }
+
+        // Create new user
+        const user = new User({
+            name,
+            email,
+            password
+        });
+        
+        await user.save();
+
+        const token = jwt.sign(
+            { userId: user._id, name: user.name, role: user.role },
+            process.env.SECRET_KEY
+        );
+
+        res.status(201).json({
+            message: "User created successfully",
+            token,
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        });
+    } catch (error) {
+        console.error('Error during user creation:', error);
+        return next(new AppError(error.message, 400));
+    }
 })
 
 const signin =catchError( async(req,res,next)=>{

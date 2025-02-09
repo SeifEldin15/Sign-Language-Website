@@ -1,20 +1,96 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    repassword: '',
     agreeToTerms: false
   });
   
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
-  const handleSubmit = (e) => {
+  const validatePassword = (password) => {
+    const passwordPattern = /^[A-Za-z][A-Za-z0-9]{7,39}$/;
+    if (!passwordPattern.test(password)) {
+      setPasswordError('Password must start with a letter and contain only letters and numbers (8-40 characters)');
+      return false;
+    }
+    setPasswordError('');
+    return true;
+  };
+
+  const validateConfirmPassword = (password, repassword) => {
+    if (password !== repassword) {
+      setConfirmPasswordError('Passwords do not match');
+      return false;
+    }
+    setConfirmPasswordError('');
+    return true;
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setFormData({
+      ...formData,
+      [e.target.name]: value
+    });
+
+    // Clear errors when user starts typing
+    if (e.target.name === 'password') {
+      setPasswordError('');
+      setConfirmPasswordError('');
+    }
+    if (e.target.name === 'repassword') {
+      setConfirmPasswordError('');
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle signup logic here
+    setError('');
+
+    if (!validatePassword(formData.password)) {
+      return;
+    }
+
+    if (!validateConfirmPassword(formData.password, formData.repassword)) {
+      return;
+    }
+
+    try {
+      const { agreeToTerms, ...signupData } = formData;
+      
+      console.log('Signup data being sent:', {
+        name: signupData.name,
+        email: signupData.email,
+        passwordLength: signupData.password?.length,
+        repasswordLength: signupData.repassword?.length,
+        passwordsMatch: signupData.password === signupData.repassword
+      });
+      
+      const response = await axios.post('http://localhost:3000/api/auth/signup', signupData);
+      console.log('Signup response:', response.data);
+      
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      
+      navigate('/');
+    } catch (error) {
+      console.error('Signup error:', {
+        message: error.response?.data?.message,
+        status: error.response?.status
+      });
+      setError(error.response?.data?.message || 'An error occurred during signup');
+    }
   };
 
   return (
@@ -34,7 +110,22 @@ const Signup = () => {
             <div>
               <input
                 type="text"
+                name="name"
                 required
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
+                placeholder="Full Name"
+              />
+            </div>
+
+            <div>
+              <input
+                type="email"
+                name="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Email"
               />
@@ -43,10 +134,16 @@ const Signup = () => {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                name="password"
                 required
+                value={formData.password}
+                onChange={handleChange}
                 className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Password"
               />
+              {passwordError && (
+                <p className="text-red-500 text-xs mt-1">{passwordError}</p>
+              )}
               <button
                 type="button"
                 className="absolute right-3 top-1/2 -translate-y-1/2"
@@ -65,10 +162,16 @@ const Signup = () => {
             <div className="relative">
               <input
                 type={showConfirmPassword ? "text" : "password"}
+                name="repassword"
                 required
+                value={formData.repassword}
+                onChange={handleChange}
                 className="w-full px-4 py-3.5 bg-[#141F23] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                 placeholder="Confirm Password"
               />
+              {confirmPasswordError && (
+                <p className="text-red-500 text-xs mt-1">{confirmPasswordError}</p>
+              )}
               <button
                 type="button"
                 className="absolute right-3 top-1/2 -translate-y-1/2"
@@ -88,7 +191,10 @@ const Signup = () => {
           <div className="flex items-start space-x-2">
             <input
               type="checkbox"
+              name="agreeToTerms"
               required
+              checked={formData.agreeToTerms}
+              onChange={handleChange}
               className="mt-1 w-4 h-4 rounded border-gray-300 text-[#4ADE80] focus:ring-[#4ADE80]"
             />
             <label className="block text-xs text-gray-300">
@@ -103,11 +209,15 @@ const Signup = () => {
             </label>
           </div>
 
+          {error && (
+            <p className="text-red-500 text-sm text-center">{error}</p>
+          )}
+
           <button
             type="submit"
             className="w-full py-3.5 px-4 mt-2 rounded-lg text-black bg-[#4ADE80] hover:bg-[#3FCF76] transition-colors text-sm font-medium"
           >
-            create account
+            Create Account
           </button>
         </form>
 
