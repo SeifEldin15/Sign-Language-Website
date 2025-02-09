@@ -9,6 +9,7 @@ import CorrectPopup from '../components/CorrectPopup';
 import IncorrectPopup from '../components/IncorrectPopup';
 import SkippedPopup from '../components/SkippedPopup';
 import Sidebar from '../components/Sidebar';
+import { useLocation } from 'react-router-dom';
 
 const QuestionPage = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -22,65 +23,28 @@ const QuestionPage = () => {
   const [showIncorrectPopup, setShowIncorrectPopup] = useState(false);
   const [showSkippedPopup, setShowSkippedPopup] = useState(false);
 
-  const mockQuestions = [
-    {
-      id: 1,
-      question: "What does this sign mean?",
-      options: [
-        { id: 1, text: 'Hello how are you' },
-        { id: 2, text: 'Guess the correct answer' },
-        { id: 3, text: 'What’s your name' },
-      ],
-      correctAnswer: 1
-    },
-    {
-      id: 2,
-      question: "Translate this sign",
-      options: [
-        { id: 1, text: 'incorrect' },
-        { id: 2, text: 'correct' },
-        { id: 3, text: 'also incorrect' },
-      ],
-      correctAnswer: 2
-    },
-    {
-        id: 2,
-        question: "Translate this sign",
-        options: [
-          { id: 1, text: 'incorrect' },
-          { id: 2, text: 'correct' },
-          { id: 3, text: 'also incorrect' },
-        ],
-        correctAnswer: 2
-      },
-      {
-        id: 2,
-        question: "Translate this sign",
-        options: [
-          { id: 1, text: 'incorrect' },
-          { id: 2, text: 'correct' },
-          { id: 3, text: 'also incorrect' },
-        ],
-        correctAnswer: 2
-      },
-      {
-        id: 2,
-        question: "Translate this sign",
-        options: [
-          { id: 1, text: 'incorrect' },
-          { id: 2, text: 'correct' },
-          { id: 3, text: 'also incorrect' },
-        ],
-        correctAnswer: 2
-      },
-  ];
+  const location = useLocation();
 
   useEffect(() => {
-    setQuestions(mockQuestions);
-  }, []);
+    const { levelId } = location.state;
+    const fetchQuestions = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/question/level/${levelId}`);
+        const data = await response.json();
+        if (data.questions) {
+          setQuestions(data.questions);
+        }
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+      }
+    };
+
+    fetchQuestions();
+  }, [location.state]);
 
   const handleCheck = () => {
-    if (selectedAnswer === currentQuestion?.correctAnswer) {
+    const currentQuestion = questions[currentQuestionIndex];
+    if (selectedAnswer === currentQuestion?.options.find(option => option.score === 10)?._id) {
       setShowCorrectPopup(true);
       setTotalPoints(prevPoints => prevPoints + 1);
     } else {
@@ -146,8 +110,7 @@ const QuestionPage = () => {
       {showIncorrectPopup && !isQuizComplete && (
         <IncorrectPopup 
           onContinue={handleContinue}
-          correctAnswer={currentQuestion?.options.find(option => 
-            option.id === currentQuestion.correctAnswer)?.text}
+          correctAnswer={currentQuestion?.sign_Text}
           isLastQuestion={currentQuestionIndex === questions.length - 1}
         />
       )}
@@ -155,8 +118,7 @@ const QuestionPage = () => {
       {showSkippedPopup && !isQuizComplete && (
         <SkippedPopup 
           onContinue={handleContinue}
-          correctAnswer={currentQuestion?.options.find(option => 
-            option.id === currentQuestion.correctAnswer)?.text}
+          correctAnswer={currentQuestion?.sign_Text}
           isLastQuestion={currentQuestionIndex === questions.length - 1}
         />
       )}
@@ -169,7 +131,10 @@ const QuestionPage = () => {
           />
         ) : (
           <>
-            <QuestionSection question={currentQuestion?.question} />
+            <QuestionSection 
+              question={currentQuestion?.question} 
+              signUrl={currentQuestion?.sign_Url}
+            />
             
             <div className="mt-4 w-full max-w-2xl mx-auto">
               {showQuestion ? (

@@ -35,10 +35,16 @@ const getAllQuestions =catchError(async(req,res,next)=>{
         })
     
 
+const getQuestionsByLevel = catchError(async (req, res, next) => {
+    let questions = await Question.find({ level: req.params.levelId });
+    res.status(200).json({ message: "Questions for level", questions });
+});
+
 export {
     AddQuestions,
     getAllQuestions,
     deleteQuestions,
     updateQuestions,
-    getoneQuestions
+    getoneQuestions,
+    getQuestionsByLevel
 }
