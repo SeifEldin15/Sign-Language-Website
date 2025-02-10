@@ -17,10 +17,8 @@ const Learn = () => {
     const fetchLevels = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/level/');
-        
         const text = await response.text();
-        console.log('Raw Response:', text);
-
+        
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -29,13 +27,45 @@ const Learn = () => {
         if (contentType && contentType.includes('application/json')) {
           const data = JSON.parse(text);
           if (data.levels) {
-            const formattedLessons = data.levels.map(level => ({
-              title: level.name,
-              color: 'bg-blue-500',
-              avatar: avatar3,
-              locked: false,
-              id: level.id
-            }));
+            // Get user progress from localStorage
+            const savedProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+            // Use completedLevel instead of currentLevel for unlocking
+            const completedLevel = parseInt(savedProgress.completedLevel) || 0;
+            
+            const formattedLessons = data.levels.map((level, index) => {
+              // Extract level number from name
+              let levelNumber;
+              const matches = level.name.match(/\d+/);
+              if (matches && matches[0]) {
+                levelNumber = parseInt(matches[0]);
+              } else {
+                levelNumber = index + 1;
+              }
+              
+              // Level is unlocked if its number is less than or equal to completed level + 1
+              const isUnlocked = levelNumber <= (completedLevel + 1);
+
+              // Assign different avatars and colors based on level number
+              const avatars = [avatar1, avatar2, avatar3, avatar4];
+              const colors = ['bg-blue-500', 'bg-purple-500', 'bg-green-500', 'bg-orange-500'];
+              
+              // Use modulo to cycle through avatars and colors if there are more than 4 levels
+              const avatarIndex = (levelNumber - 1) % 4;
+              const colorIndex = (levelNumber - 1) % 4;
+
+              return {
+                title: `Level ${levelNumber}`,
+                color: colors[colorIndex],
+                avatar: avatars[avatarIndex],
+                locked: !isUnlocked,
+                id: level._id,
+                levelNumber: levelNumber
+              };
+            });
+            
+            // Sort levels by number
+            formattedLessons.sort((a, b) => a.levelNumber - b.levelNumber);
+            
             setLessons(formattedLessons);
           }
         } else {
@@ -64,6 +94,14 @@ const Learn = () => {
 
   const handleLessonClick = (lesson) => {
     if (!lesson.locked) {
+      // Only store the current questions and level ID, don't update currentLevel
+      localStorage.setItem('userProgress', JSON.stringify({
+        ...JSON.parse(localStorage.getItem('userProgress') || '{}'),
+        activeLevel: lesson.levelNumber, // Track which level is being attempted
+        questionsCompleted: 0,
+        totalQuestions: questions.length
+      }));
+      
       navigate('/question', { state: { questions, levelId: lesson.id } });
     }
   };

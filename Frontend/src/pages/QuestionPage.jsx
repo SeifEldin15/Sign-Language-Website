@@ -9,7 +9,7 @@ import CorrectPopup from '../components/CorrectPopup';
 import IncorrectPopup from '../components/IncorrectPopup';
 import SkippedPopup from '../components/SkippedPopup';
 import Sidebar from '../components/Sidebar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const QuestionPage = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -24,15 +24,25 @@ const QuestionPage = () => {
   const [showSkippedPopup, setShowSkippedPopup] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const { levelId } = location.state;
+    // Load saved progress from localStorage
+    const savedProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+    const { levelId } = location.state || { levelId: savedProgress.currentLevel || 1 };
+
     const fetchQuestions = async () => {
       try {
         const response = await fetch(`http://localhost:3000/api/question/level/${levelId}`);
         const data = await response.json();
         if (data.questions) {
           setQuestions(data.questions);
+          // Update progress in localStorage
+          localStorage.setItem('userProgress', JSON.stringify({
+            currentLevel: levelId,
+            questionsCompleted: savedProgress.questionsCompleted || 0,
+            totalQuestions: data.questions.length
+          }));
         }
       } catch (error) {
         console.error('Error fetching questions:', error);
@@ -42,11 +52,41 @@ const QuestionPage = () => {
     fetchQuestions();
   }, [location.state]);
 
+  const handleCompleteLevel = () => {
+    const savedProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
+    const completedLevelNumber = parseInt(savedProgress.activeLevel) || 1;
+    
+    // Update progress to mark this level as completed
+    localStorage.setItem('userProgress', JSON.stringify({
+      ...savedProgress,
+      completedLevel: completedLevelNumber, // Store the highest completed level
+      questionsCompleted: 0,
+      totalQuestions: 0
+    }));
+    
+    navigate('/learn');
+  };
+
   const handleCheck = () => {
     const currentQuestion = questions[currentQuestionIndex];
     if (selectedAnswer === currentQuestion?.options.find(option => option.score === 10)?._id) {
       setShowCorrectPopup(true);
       setTotalPoints(prevPoints => prevPoints + 1);
+      
+      // Check if this was the last question
+      if (currentQuestionIndex === questions.length - 1) {
+        // Level completed - show completion message and update progress
+        setTimeout(() => {
+          handleCompleteLevel();
+        }, 1500); // Wait for correct answer animation
+      } else {
+        // Move to next question
+        setTimeout(() => {
+          setCurrentQuestionIndex(prev => prev + 1);
+          setSelectedAnswer(null);
+          setShowCorrectPopup(false);
+        }, 1500);
+      }
     } else {
       setShowIncorrectPopup(true);
       setLives(prevLives => prevLives - 1);
