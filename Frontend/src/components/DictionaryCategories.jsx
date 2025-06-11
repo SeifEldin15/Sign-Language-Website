@@ -11,7 +11,7 @@ function DictionaryCategories() {
   const navigate = useNavigate();
 
   const categories = [
-    { id: 1, title: "Introduce Your Self", image: placeholder1, path: "/dictionary/intro" },
+    { id: 1, title: "Introduce Your Self", image: placeholder1, path: "/dictionary/intro", number: "01" },
     { id: 2, title: "Body parts", image: placeholder2, path: "/dictionary/body" },
     { id: 3, title: "Everyday Conversations", image: placeholder3, path: "/dictionary/conversations" },
     { id: 4, title: "Time and day", image: placeholder4, path: "/dictionary/time" },
@@ -25,25 +25,71 @@ function DictionaryCategories() {
         <Sidebar />
       </div>
       <div className="min-h-screen bg-[#141F23] p-4 md:p-8 lg:p-12 md:ml-64 relative overflow-hidden pb-24 md:pb-12">
-        <div className="max-w-4xl mx-auto relative z-10">
-          <h1 className="text-2xl text-white mb-8">Select a Category</h1>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-            {categories.map((category) => (
-              <div
-                key={category.id}
-                onClick={() => navigate(category.path)}
-                className="bg-[#293D46] p-4 rounded-xl cursor-pointer hover:bg-gray-700/50 transition-colors"
-              >
-                <div className="flex flex-col items-center space-y-3">
-                  <img 
-                    src={category.image} 
-                    alt={category.title}
-                    className="w-24 h-24 object-cover rounded-lg"
-                  />
-                  <span className="text-white text-center">{category.title}</span>
+        <div className="max-w-6xl mx-auto relative z-10">
+          <h1 className="text-2xl text-white mb-12 text-center">Sections</h1>
+          
+          <div className="relative">
+            {categories.map((category, index) => {
+              const isEven = index % 2 === 0;
+              
+              return (
+                <div key={category.id} className="relative mb-24 last:mb-0">
+                  {/* Dotted connecting line */}
+                  {index < categories.length - 1 && (
+                    <div className={`absolute top-16 w-96 h-72 pointer-events-none ${
+                      isEven ? 'left-1/2 -translate-x-48' : 'left-1/2 -translate-x-48'
+                    }`}>
+                      <svg className="w-full h-full" viewBox="0 0 384 288">
+                        <path
+                          d={isEven ? "M 288 0 Q 32 144 96 288" : "M 96 0 Q 352 144 288 288"}
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeDasharray="8,8"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                  )}
+
+                  {/* Content */}
+                  <div className="flex justify-center">
+                    <div
+                      onClick={() => navigate(category.path)}
+                      className={`bg-[#293D46] rounded-2xl p-6 cursor-pointer hover:bg-gray-700/50 transition-colors relative w-96 ${
+                        isEven ? 'translate-x-48' : '-translate-x-48'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-6">
+                        {/* Number or Icon */}
+                        <div className="flex-shrink-0 relative">
+                          {category.number ? (
+                            <div className="relative">
+                              <div className="w-20 h-20 bg-blue-500 rounded-2xl flex items-center justify-center">
+                                <span className="text-white text-2xl font-bold">{category.number}</span>
+                              </div>
+                              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full"></div>
+                            </div>
+                          ) : (
+                            <div className="w-20 h-20 rounded-2xl overflow-hidden bg-gray-600 flex items-center justify-center">
+                              <img 
+                                src={category.image} 
+                                alt={category.title}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          )}
+                        </div>
+                        
+                        {/* Title */}
+                        <div className="flex-1">
+                          <h3 className="text-white text-xl font-medium">{category.title}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
