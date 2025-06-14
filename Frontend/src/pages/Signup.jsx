@@ -19,9 +19,12 @@ const Signup = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
   const validatePassword = (password) => {
-    const passwordPattern = /^[A-Za-z][A-Za-z0-9]{7,39}$/;
-    if (!passwordPattern.test(password)) {
-      setPasswordError('Password must start with a letter and contain only letters and numbers (8-40 characters)');
+    if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters long');
+      return false;
+    }
+    if (password.length > 40) {
+      setPasswordError('Password must be no longer than 40 characters');
       return false;
     }
     setPasswordError('');
