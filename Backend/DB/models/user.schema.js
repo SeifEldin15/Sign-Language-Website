@@ -21,8 +21,60 @@ isActive:{
 level:{
     type:Schema.Types.ObjectId,
     ref:'Level'
-}
-
+},
+// Progress tracking fields
+progress: {
+    currentLevel: {
+        type: Schema.Types.ObjectId,
+        ref: 'Level',
+        default: null
+    },
+    questionsCompleted: {
+        type: Number,
+        default: 0
+    },
+    totalQuestions: {
+        type: Number,
+        default: 0
+    },
+    completedLevels: [{
+        levelId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Level'
+        },
+        completedAt: {
+            type: Date,
+            default: Date.now
+        },
+        questionsCompleted: {
+            type: Number,
+            default: 0
+        },
+        totalQuestions: {
+            type: Number,
+            default: 0
+        }
+    }]
+},
+// Bookmarks for dictionary words
+bookmarks: [{
+    word: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    bookmarkedAt: {
+        type: Date,
+        default: Date.now
+    }
+}]
 
 },{
     timestamps:true,
@@ -37,8 +89,9 @@ schema.post('init',function (doc){
     if(doc.profile_Picture) doc.profile_Picture = "http://localhost:3000/uploads/user/" + doc.profile_Picture
     })
 
-schema.pre('findOneAndUpdate',function(){
-    if(this._update.password)  this._update.password =bcrypt.hashSync(this._update.password , 8)
-    })
+// Password hashing is handled in auth controller to avoid conflicts
+// schema.pre('findOneAndUpdate',function(){
+//     if(this._update.password)  this._update.password =bcrypt.hashSync(this._update.password , 8)
+//     })
 
 export const User =model('User',schema)
