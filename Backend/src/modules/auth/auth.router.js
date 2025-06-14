@@ -6,9 +6,7 @@ import { changeUserPassword, signin, signup } from "./auth.controller.js";
 
 const authRouter = Router()
 
-// Temporarily remove validation middleware to test
-authRouter.post('/signup', signup)
-// authRouter.post('/signup',Validate(signupVal),checkEmail,signup)
+authRouter.post('/signup', Validate(signupVal), checkEmail, signup)
 
 authRouter.post('/signin', Validate(signinVal), signin)
 authRouter.patch('/changepassword',Validate(changePasswordVal),changeUserPassword)
