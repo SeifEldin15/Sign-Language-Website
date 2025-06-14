@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-export const dbConnection =mongoose.connect('mongodb://127.0.0.1:27017/gproject').then(()=>{
+export const dbConnection =mongoose.connect('mongodb+srv://seif:2171@cluster0.n0lwv.mongodb.net/college').then(()=>{
     console.log("Database Connected Successfully ..");
 }).catch(()=>{
     console.log("Error in Connection DB ..");
