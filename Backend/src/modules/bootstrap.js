@@ -1,6 +1,6 @@
 import authRouter from "./auth/auth.router.js";
 import CategoryRouter from "./Categories/categories.router.js";
-import dectionaryRouter from "./dectionary/dectionary.router.js";
+import dectionaryRouter from "./dictionaries/dictionaries.router.js";
 import LevelRouter from "./Levels/level.router.js";
 import MistakeRouter from "./mistake/mistake.router.js";
 import QuestionRouter from "./question/question.router.js";
