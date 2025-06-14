@@ -10,8 +10,9 @@ text:String
     versionKey:false
 })
 
+// Images are served from React public folder, so we just return the filename
 schema.post('init',function(doc){
-    if(doc.sign_Url) doc.sign_Url = process.env.BASE_URL+"sign/" + doc.sign_Url
+    // No URL transformation needed - frontend will handle public folder access
 })
 
 export const Sign = model('Sign',schema)
