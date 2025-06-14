@@ -12,6 +12,10 @@ const schema = new Schema ({
 question:{type:String, required:true},
 options:[
     {
+        _id: {
+            type: mongoose.Schema.Types.ObjectId,
+            default: () => new mongoose.Types.ObjectId()
+        },
         text:String,
         score:{type:Number, min:0, max:10, default:0}
     }
@@ -22,8 +26,9 @@ correctOption:{ type: mongoose.Schema.Types.Mixed}
     versionKey:false
 })
 
+// Images are served from React public folder, so we just return the filename
 schema.post('init',function(doc){
-    if(doc.sign_Url) doc.sign_Url = process.env.BASE_URL+"questions/" + doc.sign_Url
+    // No URL transformation needed - frontend will handle public folder access
 })
 
 
