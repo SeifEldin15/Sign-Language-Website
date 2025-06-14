@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 import { 
   BookmarkIcon, 
@@ -12,8 +14,169 @@ import {
 import { Link } from 'react-router-dom';
 
 const Settings = () => {
+  const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  
+  // Profile form state
+  const [profileData, setProfileData] = useState({
+    email: '',
+    newPassword: '',
+    name: ''
+  });
+  
+  // Contact form state
+  const [contactData, setContactData] = useState({
+    subject: '',
+    message: ''
+  });
+
+  // Load user data on component mount
+  useEffect(() => {
+    loadUserData();
+  }, []);
+
+  const loadUserData = () => {
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        setProfileData(prev => ({
+          ...prev,
+          email: user.email || '',
+          name: user.name || ''
+        }));
+      }
+    } catch (error) {
+      console.error('Error loading user data:', error);
+    }
+  };
+
+  const handleProfileChange = (e) => {
+    setProfileData({
+      ...profileData,
+      [e.target.name]: e.target.value
+    });
+    // Clear messages when user starts typing
+    setError('');
+    setMessage('');
+  };
+
+  const handleContactChange = (e) => {
+    setContactData({
+      ...contactData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleProfileUpdate = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setMessage('');
+
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const token = localStorage.getItem('token');
+      
+      if (!user || !token) {
+        setError('Authentication required. Please login again.');
+        navigate('/login');
+        return;
+      }
+
+      // Prepare update data - only include fields that have values
+      const updateData = {};
+      if (profileData.email && profileData.email !== user.email) {
+        updateData.email = profileData.email;
+      }
+      if (profileData.newPassword && profileData.newPassword.trim()) {
+        updateData.password = profileData.newPassword;
+      }
+      if (profileData.name && profileData.name !== user.name) {
+        updateData.name = profileData.name;
+      }
+
+      if (Object.keys(updateData).length === 0) {
+        setMessage('No changes to update');
+        return;
+      }
+
+      const response = await axios.put(
+        `http://localhost:3000/api/user/${user._id || user.id}`,
+        updateData,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      // Update localStorage with new user data
+      const updatedUser = { ...user, ...updateData };
+      if (updateData.password) {
+        delete updatedUser.password; // Don't store password in localStorage
+      }
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+
+      setMessage('Profile updated successfully!');
+      setProfileData(prev => ({ ...prev, newPassword: '' })); // Clear password field
+      
+    } catch (error) {
+      console.error('Profile update error:', error);
+      setError(
+        error.response?.data?.message || 
+        'Failed to update profile. Please try again.'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setMessage('');
+
+    try {
+      // This could be extended to call a backend API for contact messages
+      // For now, we'll just show a success message
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      
+      setMessage('Message sent successfully! We\'ll get back to you soon.');
+      setContactData({ subject: '', message: '' });
+      
+    } catch (error) {
+      setError('Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    try {
+      // Clear all user data from localStorage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      // Show success message briefly before redirect
+      setMessage('Logged out successfully!');
+      
+      // Redirect to login page after a short delay
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
+      
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Even if there's an error, still redirect to login
+      navigate('/login');
+    }
+  };
 
   const menuItems = [
     { icon: BookmarkIcon, label: "Saved words", href: "/bookmarks" },
@@ -27,11 +190,24 @@ const Settings = () => {
       </div>
       <div className="min-h-screen bg-[#141F23] p-4 md:p-8 lg:p-12 md:ml-64 relative overflow-hidden pb-24 md:pb-12">
         <div className="max-w-2xl mx-auto relative z-10">
+          
+          {/* Success/Error Messages */}
+          {message && (
+            <div className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+              {message}
+            </div>
+          )}
+          {error && (
+            <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+              {error}
+            </div>
+          )}
+
           {/* Profile Section */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-16 h-16 bg-[#365148] rounded-full flex items-center justify-center text-white text-2xl font-semibold">
-                SE
+                {profileData.name ? profileData.name.substring(0, 2).toUpperCase() : 'US'}
               </div>
               <div>
                 <h2 className="text-white text-xl font-semibold">Edit Profile</h2>
@@ -40,11 +216,24 @@ const Settings = () => {
             </div>
 
             {/* Edit Profile Form */}
-            <form className="space-y-4 mb-8">
+            <form className="space-y-4 mb-8" onSubmit={handleProfileUpdate}>
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  value={profileData.name}
+                  onChange={handleProfileChange}
+                  className="w-full px-4 py-3.5 bg-[#293D46] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
+                  placeholder="Full Name"
+                />
+              </div>
+              
               <div>
                 <input
                   type="email"
-                  defaultValue="seif@gmail.com"
+                  name="email"
+                  value={profileData.email}
+                  onChange={handleProfileChange}
                   className="w-full px-4 py-3.5 bg-[#293D46] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                   placeholder="Email"
                 />
@@ -53,8 +242,11 @@ const Settings = () => {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
+                  name="newPassword"
+                  value={profileData.newPassword}
+                  onChange={handleProfileChange}
                   className="w-full px-4 py-3.5 bg-[#293D46] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
-                  placeholder="New Password"
+                  placeholder="New Password (leave blank to keep current)"
                 />
                 <button
                   type="button"
@@ -73,9 +265,10 @@ const Settings = () => {
 
               <button
                 type="submit"
-                className="w-full py-3.5 px-4 rounded-lg text-black bg-[#4ADE80] hover:bg-[#3FCF76] transition-colors text-sm font-medium"
+                disabled={loading}
+                className="w-full py-3.5 px-4 rounded-lg text-black bg-[#4ADE80] hover:bg-[#3FCF76] transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Save Changes
+                {loading ? 'Saving...' : 'Save Changes'}
               </button>
             </form>
           </div>
@@ -87,15 +280,19 @@ const Settings = () => {
                 <ChatBubbleLeftRightIcon className="w-8 h-8" />
               </div>
               <div>
-                <h2 className="text-white text-xl font-semibold">Contract</h2>
+                <h2 className="text-white text-xl font-semibold">Contact</h2>
                 <p className="text-gray-400">Get in touch with us</p>
               </div>
             </div>
 
-            <form className="space-y-4 mb-8">
+            <form className="space-y-4 mb-8" onSubmit={handleContactSubmit}>
               <div>
                 <input
                   type="text"
+                  name="subject"
+                  value={contactData.subject}
+                  onChange={handleContactChange}
+                  required
                   className="w-full px-4 py-3.5 bg-[#293D46] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400"
                   placeholder="Subject"
                 />
@@ -103,6 +300,10 @@ const Settings = () => {
               
               <div>
                 <textarea
+                  name="message"
+                  value={contactData.message}
+                  onChange={handleContactChange}
+                  required
                   className="w-full px-4 py-3.5 bg-[#293D46] rounded-lg text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-1 focus:ring-green-400 min-h-[120px] resize-none"
                   placeholder="Your message"
                 />
@@ -110,9 +311,10 @@ const Settings = () => {
 
               <button
                 type="submit"
-                className="w-full py-3.5 px-4 rounded-lg text-black bg-[#4ADE80] hover:bg-[#3FCF76] transition-colors text-sm font-medium"
+                disabled={loading}
+                className="w-full py-3.5 px-4 rounded-lg text-black bg-[#4ADE80] hover:bg-[#3FCF76] transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send Message
+                {loading ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
@@ -147,7 +349,10 @@ const Settings = () => {
             </button>
 
             {/* Logout Button */}
-            <button className="w-full flex items-center justify-between p-4 bg-[#293D46] rounded-xl hover:bg-gray-700/50 transition-colors">
+            <button 
+              onClick={handleLogout}
+              className="w-full flex items-center justify-between p-4 bg-[#293D46] rounded-xl hover:bg-red-600/20 hover:border-red-500 transition-colors border border-transparent"
+            >
               <div className="flex items-center gap-3">
                 <ArrowRightOnRectangleIcon className="w-6 h-6 text-gray-400" />
                 <span className="text-white">Logout</span>
