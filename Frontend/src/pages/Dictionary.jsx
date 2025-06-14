@@ -1,19 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { BookmarkIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon as BookmarkSolidIcon } from "@heroicons/react/24/solid";
 
 function Dictionary() {
   const { category } = useParams();
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedWord, setSelectedWord] = useState(null);
+  const [bookmarks, setBookmarks] = useState([]);
+  const [userId, setUserId] = useState(null);
   
   // Modified sample word list with image URLs
   const categoryWords = {
     intro: [
-      { word: "hello", image: "/images/1.png" },
+      { word: "hello", image: "/signs/hello.gif" },
       { word: "my name is", image: "/images/2.png" },
-      { word: "nice to meet you", image: "/images/3.png" },
-      { word: "I am", image: "/images/4.png" },
+      { word: "nice to meet you", image: "/signs/nice_to_meet_you.gif" },
+      { word: "I am", image: "/signs/me.gif" },
     ],
     body: [
       { word: "eye", image: "/images/1.png" },
@@ -21,18 +25,153 @@ function Dictionary() {
       { word: "mouth", image: "/images/3.png" },
       { word: "hand", image: "/images/4.png" },
     ],
-    conversations: ["how are you", "good morning", "good evening", "thank you"],
-    time: ["today", "tomorrow", "yesterday", "morning", "evening"],
-    places: ["hospital", "school", "restaurant", "park", "library"],
-    objects: ["book", "phone", "computer", "chair", "table"],
+    conversations: [
+      { word: "how are you", image: "/images/1.png" },
+      { word: "good morning", image: "/images/2.png" },
+      { word: "good evening", image: "/images/3.png" },
+      { word: "thank you", image: "/images/4.png" }
+    ],
+    time: [
+      { word: "today", image: "/images/1.png" },
+      { word: "tomorrow", image: "/images/2.png" },
+      { word: "yesterday", image: "/images/3.png" },
+      { word: "morning", image: "/images/4.png" },
+      { word: "evening", image: "/images/1.png" }
+    ],
+    places: [
+      { word: "hospital", image: "/images/1.png" },
+      { word: "school", image: "/images/2.png" },
+      { word: "restaurant", image: "/images/3.png" },
+      { word: "park", image: "/images/4.png" },
+      { word: "library", image: "/images/1.png" }
+    ],
+    objects: [
+      { word: "book", image: "/images/1.png" },
+      { word: "phone", image: "/images/2.png" },
+      { word: "computer", image: "/images/3.png" },
+      { word: "chair", image: "/images/4.png" },
+      { word: "table", image: "/images/1.png" }
+    ],
   };
 
   const words = categoryWords[category] || [];
+
+  // Get user ID from localStorage and fetch bookmarks
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+      fetchBookmarks(storedUserId);
+    }
+  }, []);
+
+  // Fetch user bookmarks
+  const fetchBookmarks = async (userIdParam) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/user/bookmarks', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'userid': userIdParam
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setBookmarks(data.bookmarks || []);
+      }
+    } catch (error) {
+      console.error('Error fetching bookmarks:', error);
+    }
+  };
+
+  // Add bookmark
+  const addBookmark = async (word, image) => {
+    if (!userId) {
+      alert('Please log in to bookmark words');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/api/user/bookmarks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'userid': userId
+        },
+        body: JSON.stringify({
+          word: word,
+          image: image,
+          category: category
+        })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setBookmarks(data.bookmarks);
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || 'Failed to add bookmark');
+      }
+    } catch (error) {
+      console.error('Error adding bookmark:', error);
+      alert('Failed to add bookmark');
+    }
+  };
+
+  // Remove bookmark
+  const removeBookmark = async (word) => {
+    if (!userId) return;
+
+    try {
+      const response = await fetch('http://localhost:3000/api/user/bookmarks', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'userid': userId
+        },
+        body: JSON.stringify({
+          word: word
+        })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setBookmarks(data.bookmarks);
+      }
+    } catch (error) {
+      console.error('Error removing bookmark:', error);
+    }
+  };
+
+  // Check if word is bookmarked
+  const isBookmarked = (word) => {
+    return bookmarks.some(bookmark => bookmark.word === word);
+  };
+
+  // Handle bookmark toggle
+  const toggleBookmark = (word, image) => {
+    if (isBookmarked(word)) {
+      removeBookmark(word);
+    } else {
+      addBookmark(word, image);
+    }
+  };
 
   // Updated filter to work with new word object structure
   const filteredWords = words.filter(item =>
     item.word.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Handle word click for zoom overlay
+  const handleWordClick = (item) => {
+    setSelectedWord(item);
+  };
+
+  // Close zoom overlay
+  const closeOverlay = () => {
+    setSelectedWord(null);
+  };
 
   return (
     <>
@@ -48,7 +187,10 @@ function Dictionary() {
               placeholder="Search for a Word"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full p-4 bg-[#293D46] rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#365148]"
+              className="w-full p-4 bg-[#293D46] rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2"
+              style={{'--tw-ring-color': 'rgb(74, 222, 128)'}}
+              onFocus={(e) => e.target.style.boxShadow = '0 0 0 2px rgb(74, 222, 128)'}
+              onBlur={(e) => e.target.style.boxShadow = ''}
             />
           </div>
 
@@ -59,8 +201,33 @@ function Dictionary() {
                 key={index}
                 className="relative p-4 bg-[#293D46] rounded-xl hover:bg-gray-700/50 transition-colors"
               >
-                <BookmarkIcon className="absolute top-4 right-4 w-6 h-6 text-gray-400 hover:text-[#365148] cursor-pointer" />
-                <div className="flex items-center justify-between px-12 py-4">
+                <button
+                  onClick={() => toggleBookmark(item.word, item.image)}
+                  className="absolute top-4 right-4 w-6 h-6 text-gray-400 cursor-pointer z-10"
+                  style={{
+                    color: isBookmarked(item.word) ? 'rgb(74, 222, 128)' : undefined
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isBookmarked(item.word)) {
+                      e.target.style.color = 'rgb(74, 222, 128)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isBookmarked(item.word)) {
+                      e.target.style.color = '';
+                    }
+                  }}
+                >
+                  {isBookmarked(item.word) ? (
+                    <BookmarkSolidIcon className="w-6 h-6" />
+                  ) : (
+                    <BookmarkIcon className="w-6 h-6" />
+                  )}
+                </button>
+                <div 
+                  className="flex items-center justify-between px-12 py-4 cursor-pointer"
+                  onClick={() => handleWordClick(item)}
+                >
                   <div className="flex-1">
                     <span className="text-white text-2xl">{item.word}</span>
                   </div>
@@ -82,6 +249,55 @@ function Dictionary() {
             )}
           </div>
         </div>
+
+        {/* Zoom Overlay */}
+        {selectedWord && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[60]"
+            onClick={closeOverlay}
+          >
+            <div 
+              className="bg-[#293D46] rounded-2xl p-8 max-w-2xl max-h-[80vh] overflow-auto m-4 relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={closeOverlay}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl"
+              >
+                ×
+              </button>
+              
+              <div className="text-center">
+                <h2 className="text-white text-4xl mb-6">{selectedWord.word}</h2>
+                <div className="mb-6">
+                  <img
+                    src={selectedWord.image}
+                    alt={`Sign for ${selectedWord.word}`}
+                    className="w-full max-w-md mx-auto rounded-lg"
+                  />
+                </div>
+                <button
+                  onClick={() => toggleBookmark(selectedWord.word, selectedWord.image)}
+                  className={`flex items-center justify-center mx-auto px-6 py-3 rounded-lg transition-colors ${
+                    isBookmarked(selectedWord.word)
+                      ? 'text-white'
+                      : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
+                  }`}
+                  style={{
+                    backgroundColor: isBookmarked(selectedWord.word) ? 'rgb(74, 222, 128)' : undefined
+                  }}
+                >
+                  {isBookmarked(selectedWord.word) ? (
+                    <BookmarkSolidIcon className="w-5 h-5 mr-2" />
+                  ) : (
+                    <BookmarkIcon className="w-5 h-5 mr-2" />
+                  )}
+                  {isBookmarked(selectedWord.word) ? 'Bookmarked' : 'Add Bookmark'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
