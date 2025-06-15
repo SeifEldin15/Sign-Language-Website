@@ -80,7 +80,7 @@ const Signup = () => {
         passwordsMatch: signupData.password === signupData.repassword
       });
       
-      const response = await axios.post('http://localhost:3000/api/auth/signup', signupData);
+      const response = await axios.post('http://localhost:3002/api/auth/signup', signupData);
       console.log('Signup response:', response.data);
       
       localStorage.setItem('token', response.data.token);

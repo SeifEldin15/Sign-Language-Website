@@ -10,7 +10,7 @@ import { bootstrap } from './src/modules/bootstrap.js';
 import dotenv from 'dotenv'
 dotenv.config()
 const app = express()
-const port =process.env.PORT ||  3000
+const port =process.env.PORT ||  3002
 app.use(express.json())
 app.use('/uploads', express.static('uploads'));
 app.use(cors({

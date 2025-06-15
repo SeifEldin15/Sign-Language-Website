@@ -39,7 +39,7 @@ function RealtimeTranslation() {
         await new Promise(resolve => setTimeout(resolve, 500))
 
         // Initialize WebSocket
-        wsRef.current = new WebSocket('ws://localhost:8000/ws/predict')
+        wsRef.current = new WebSocket('wss://mediapipe-client.onrender.com/ws/predict')
         
         wsRef.current.onopen = () => console.log('✅ WebSocket connected')
         wsRef.current.onerror = e => console.error('❌ WebSocket error:', e)

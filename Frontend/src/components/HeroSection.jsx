@@ -94,7 +94,7 @@ const HeroSection = () => {
 
   const fetchLevelName = async (levelId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/levels/${levelId}`);
+      const response = await fetch(`http://localhost:3002/api/levels/${levelId}`);
       const data = await response.json();
       // Extract level number from name (assuming format "Welcome1", "Welcome2", etc.)
       const levelNumber = data.name?.match(/\d+/)?.[0];

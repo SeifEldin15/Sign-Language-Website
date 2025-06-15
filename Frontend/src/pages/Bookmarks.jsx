@@ -24,7 +24,7 @@ function Bookmarks() {
   const fetchBookmarks = async (userIdParam) => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3000/api/user/bookmarks', {
+      const response = await fetch('http://localhost:3002/api/user/bookmarks', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ function Bookmarks() {
     if (!userId) return;
 
     try {
-      const response = await fetch('http://localhost:3000/api/user/bookmarks', {
+      const response = await fetch('http://localhost:3002/api/user/bookmarks', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

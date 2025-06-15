@@ -58,7 +58,7 @@ function Dictionary() {
   // Fetch user bookmarks
   const fetchBookmarks = async (userIdParam) => {
     try {
-      const response = await fetch('http://localhost:3000/api/user/bookmarks', {
+      const response = await fetch('http://localhost:3002/api/user/bookmarks', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ function Dictionary() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/user/bookmarks', {
+      const response = await fetch('http://localhost:3002/api/user/bookmarks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ function Dictionary() {
     if (!userId) return;
 
     try {
-      const response = await fetch('http://localhost:3000/api/user/bookmarks', {
+      const response = await fetch('http://localhost:3002/api/user/bookmarks', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

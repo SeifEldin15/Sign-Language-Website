@@ -86,7 +86,7 @@ bookmarks: [{
 // })
 
 schema.post('init',function (doc){
-    if(doc.profile_Picture) doc.profile_Picture = "http://localhost:3000/uploads/user/" + doc.profile_Picture
+    if(doc.profile_Picture) doc.profile_Picture = "http://localhost:3002/uploads/user/" + doc.profile_Picture
     })
 
 // Password hashing is handled in auth controller to avoid conflicts
