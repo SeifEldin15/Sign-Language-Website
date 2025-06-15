@@ -10,7 +10,7 @@ node_modules
 **/.Python
 build/
 develop-eggs/
-dist/
+# dist/
 downloads/
 eggs/
 .eggs/
@@ -30,7 +30,7 @@ wheels/
 **/env/
 
 # Build outputs
-**/dist/
+# **/dist/
 **/dist-ssr/
 **/*.local
 
