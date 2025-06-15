@@ -11,12 +11,11 @@ function DictionaryCategories() {
   const navigate = useNavigate();
 
   const categories = [
-    { id: 1, title: "Introduce Your Self", image: placeholder1, path: "/dictionary/intro", number: "01" },
-    { id: 2, title: "Body parts", image: placeholder2, path: "/dictionary/body" },
-    { id: 3, title: "Everyday Conversations", image: placeholder3, path: "/dictionary/conversations" },
-    { id: 4, title: "Time and day", image: placeholder4, path: "/dictionary/time" },
-    { id: 5, title: "Places And Directions", image: placeholder5, path: "/dictionary/places" },
-    { id: 6, title: "objects and places", image: placeholder6, path: "/dictionary/objects" },
+    { id: 1, title: "Basic Signs", image: placeholder1, path: "/dictionary/basic", number: "01" },
+    { id: 2, title: "Numbers", image: placeholder2, path: "/dictionary/numbers" },
+    { id: 3, title: "Colors", image: placeholder3, path: "/dictionary/colors" },
+    { id: 4, title: "Family", image: placeholder4, path: "/dictionary/family" },
+    { id: 5, title: "Food", image: placeholder5, path: "/dictionary/food" },
   ];
 
   return (
@@ -39,26 +38,26 @@ function DictionaryCategories() {
                     <div className={`absolute top-16 w-96 h-72 pointer-events-none ${
                       isEven ? 'left-1/2 -translate-x-48' : 'left-1/2 -translate-x-48'
                     }`}>
-                      <svg className="w-full h-full" viewBox="0 0 384 288">
-                        <path
-                          d={isEven ? "M 288 0 Q 32 144 96 288" : "M 96 0 Q 352 144 288 288"}
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeDasharray="8,8"
-                          fill="none"
-                        />
-                      </svg>
+                                              <svg className="w-full h-full" viewBox="0 0 384 288">
+                          <path
+                            d={isEven ? "M 288 0 Q 0 200 96 288" : "M 96 0 Q 384 200 288 288"}
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeDasharray="8,8"
+                            fill="none"
+                          />
+                        </svg>
                     </div>
                   )}
 
                   {/* Content */}
-                  <div className="flex justify-center">
-                    <div
-                      onClick={() => navigate(category.path)}
-                      className={`bg-[#293D46] rounded-2xl p-6 cursor-pointer hover:bg-gray-700/50 transition-colors relative w-96 ${
-                        isEven ? 'translate-x-48' : '-translate-x-48'
-                      }`}
-                    >
+                                      <div className="flex justify-center">
+                      <div
+                        onClick={() => navigate(category.path)}
+                        className={`bg-[#293D46] rounded-2xl p-6 cursor-pointer hover:bg-[#3a4a54] transition-colors relative w-96 ${
+                          isEven ? 'translate-x-48' : '-translate-x-48'
+                        }`}
+                      >
                       <div className="flex items-center space-x-6">
                         {/* Number or Icon */}
                         <div className="flex-shrink-0 relative">

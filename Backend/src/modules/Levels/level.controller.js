@@ -1,4 +1,5 @@
 import { catchError } from "../../middlewares/catchError.js"
+import { AppError } from "../../utils/appError.js"
 import {Level} from '../../../DB/models/levels.schema.js'
 const addLevel =catchError(  async(req,res)=>{
     let level =await Level.insertMany(req.body)
@@ -10,7 +11,7 @@ const addLevel =catchError(  async(req,res)=>{
     const getAllLevels =catchError( async (req,res,next)=>{
         let filterObj = {}  
         if(req.params.category) filterObj.category = req.params.category
-        let levels =await Level.find(filterObj)
+        let levels =await Level.find(filterObj).populate('Questions')
         res.status(200).json({message:"All Levels : ", levels })
         })
 

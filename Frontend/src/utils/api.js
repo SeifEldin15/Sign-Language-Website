@@ -1,35 +1,37 @@
 // utils/api.js
-const API_BASE_URL = 'http://localhost:3000/api';
+import { API_BASE_URL, CATEGORY_MAP } from '../config/constants';
 
-// Generic API call function
+// API utility function with error handling
 const apiCall = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
   
-  const defaultOptions = {
+  const config = {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      ...options.headers,
     },
+    ...options,
   };
 
-  const config = { 
-    ...defaultOptions, 
-    ...options 
-  };
-
-  try {
-    const response = await fetch(url, config);
-    const data = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(data.message || `HTTP error! status: ${response.status}`);
-    }
-    
-    return data;
-  } catch (error) {
-    console.error(`API call failed for ${endpoint}:`, error);
-    throw error;
+  const response = await fetch(url, config);
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
   }
+
+  return response.json();
+};
+
+// Error handler for API calls
+export const handleApiError = (error, fallbackMessage = 'An error occurred') => {
+  console.error('API Error:', error);
+  return error.message || fallbackMessage;
+};
+
+// Category mapping function - maps frontend slugs to database category IDs
+export const getCategoryIdBySlug = (slug) => {
+  return CATEGORY_MAP[slug] || null;
 };
 
 // API methods
@@ -102,11 +104,6 @@ export const api = {
 };
 
 // Helper functions
-export const handleApiError = (error, fallbackMessage = 'Something went wrong') => {
-  console.error('API Error:', error);
-  return error.message || fallbackMessage;
-};
-
 export const isValidUrl = (url) => {
   try {
     new URL(url);

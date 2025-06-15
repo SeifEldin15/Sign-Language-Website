@@ -10,8 +10,8 @@ import Home2 from './pages/Home2'
 import Settings from './pages/Settings'
 import Dictionary from './pages/Dictionary'
 import Bookmarks from './pages/Bookmarks'
-import DictionaryCategories from './components/DictionaryCategories'
 import Commonwords from './pages/Commonwords'
+import RealtimeTranslation from './pages/RealtimeTranslation'
 
 // Loading Screen Component
 function LoadingScreen() {
@@ -168,14 +168,15 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/learn" element={<Learn />} />
+        <Route path="/learn/:category" element={<Learn />} />
         <Route path="/" element={<Home2 />} />
         <Route path="/lesson" element={<Lesson />} />
         <Route path="/question" element={<QuestionPage />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/dictionary" element={<DictionaryCategories />} />
+        <Route path="/dictionary" element={<Dictionary />} />
         <Route path="/commonwords" element={<Commonwords />} />
-        <Route path="/dictionary/:category" element={<Dictionary />} />
         <Route path="/bookmarks" element={<Bookmarks />} />
+        <Route path="/realtime-translation" element={<RealtimeTranslation />} />
       </Routes>
     </BrowserRouter>
     </>

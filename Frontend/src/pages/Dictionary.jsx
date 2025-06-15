@@ -1,60 +1,50 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { BookmarkIcon } from "@heroicons/react/24/outline";
 import { BookmarkIcon as BookmarkSolidIcon } from "@heroicons/react/24/solid";
 
 function Dictionary() {
-  const { category } = useParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedWord, setSelectedWord] = useState(null);
   const [bookmarks, setBookmarks] = useState([]);
   const [userId, setUserId] = useState(null);
   
-  // Modified sample word list with image URLs
-  const categoryWords = {
-    intro: [
-      { word: "hello", image: "/signs/hello.gif" },
-      { word: "my name is", image: "/images/2.png" },
-      { word: "nice to meet you", image: "/signs/nice_to_meet_you.gif" },
-      { word: "I am", image: "/signs/me.gif" },
-    ],
-    body: [
-      { word: "eye", image: "/images/1.png" },
-      { word: "nose", image: "/images/2.png" },
-      { word: "mouth", image: "/images/3.png" },
-      { word: "hand", image: "/images/4.png" },
-    ],
-    conversations: [
-      { word: "how are you", image: "/images/1.png" },
-      { word: "good morning", image: "/images/2.png" },
-      { word: "good evening", image: "/images/3.png" },
-      { word: "thank you", image: "/images/4.png" }
-    ],
-    time: [
-      { word: "today", image: "/images/1.png" },
-      { word: "tomorrow", image: "/images/2.png" },
-      { word: "yesterday", image: "/images/3.png" },
-      { word: "morning", image: "/images/4.png" },
-      { word: "evening", image: "/images/1.png" }
-    ],
-    places: [
-      { word: "hospital", image: "/images/1.png" },
-      { word: "school", image: "/images/2.png" },
-      { word: "restaurant", image: "/images/3.png" },
-      { word: "park", image: "/images/4.png" },
-      { word: "library", image: "/images/1.png" }
-    ],
-    objects: [
-      { word: "book", image: "/images/1.png" },
-      { word: "phone", image: "/images/2.png" },
-      { word: "computer", image: "/images/3.png" },
-      { word: "chair", image: "/images/4.png" },
-      { word: "table", image: "/images/1.png" }
-    ],
-  };
+  // All words from all categories combined
+  const allWords = [
+    // Basic Signs
+    { word: "hello", image: "/signs/hello.gif", category: "Basic Signs" },
+    { word: "my name is", image: "/images/2.png", category: "Basic Signs" },
+    { word: "nice to meet you", image: "/signs/nice_to_meet_you.gif", category: "Basic Signs" },
+    { word: "I am", image: "/signs/me.gif", category: "Basic Signs" },
+    
+    // Numbers
+    { word: "one", image: "/images/1.png", category: "Numbers" },
+    { word: "two", image: "/images/2.png", category: "Numbers" },
+    { word: "three", image: "/images/3.png", category: "Numbers" },
+    { word: "four", image: "/images/4.png", category: "Numbers" },
+    
+    // Colors
+    { word: "red", image: "/images/1.png", category: "Colors" },
+    { word: "blue", image: "/images/2.png", category: "Colors" },
+    { word: "green", image: "/images/3.png", category: "Colors" },
+    { word: "yellow", image: "/images/4.png", category: "Colors" },
+    
+    // Family
+    { word: "mother", image: "/images/1.png", category: "Family" },
+    { word: "father", image: "/images/2.png", category: "Family" },
+    { word: "sister", image: "/images/3.png", category: "Family" },
+    { word: "brother", image: "/images/4.png", category: "Family" },
+    { word: "grandmother", image: "/images/1.png", category: "Family" },
+    
+    // Food
+    { word: "apple", image: "/images/1.png", category: "Food" },
+    { word: "bread", image: "/images/2.png", category: "Food" },
+    { word: "water", image: "/images/3.png", category: "Food" },
+    { word: "milk", image: "/images/4.png", category: "Food" },
+    { word: "rice", image: "/images/1.png", category: "Food" },
+  ];
 
-  const words = categoryWords[category] || [];
+  const words = allWords;
 
   // Get user ID from localStorage and fetch bookmarks
   useEffect(() => {
@@ -102,7 +92,7 @@ function Dictionary() {
         body: JSON.stringify({
           word: word,
           image: image,
-          category: category
+          category: "All Categories"
         })
       });
       
@@ -180,6 +170,12 @@ function Dictionary() {
       </div>
       <div className="min-h-screen bg-[#141F23] p-4 md:p-8 lg:p-12 md:ml-64 relative overflow-hidden pb-24 md:pb-12">
         <div className="max-w-4xl mx-auto relative z-10">
+          {/* Title */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-white text-center mb-6">Dictionary</h1>
+            <p className="text-gray-400 text-center mb-8">Search through all sign language words</p>
+          </div>
+
           {/* Search Bar */}
           <div className="mb-8">
             <input
@@ -229,7 +225,10 @@ function Dictionary() {
                   onClick={() => handleWordClick(item)}
                 >
                   <div className="flex-1">
-                    <span className="text-white text-2xl">{item.word}</span>
+                    <div className="flex flex-col">
+                      <span className="text-white text-2xl">{item.word}</span>
+                      <span className="text-gray-400 text-sm mt-1">{item.category}</span>
+                    </div>
                   </div>
                   <div className="w-32 h-32">
                     <img
@@ -268,7 +267,8 @@ function Dictionary() {
               </button>
               
               <div className="text-center">
-                <h2 className="text-white text-4xl mb-6">{selectedWord.word}</h2>
+                <h2 className="text-white text-4xl mb-2">{selectedWord.word}</h2>
+                <p className="text-gray-400 text-lg mb-6">{selectedWord.category}</p>
                 <div className="mb-6">
                   <img
                     src={selectedWord.image}
