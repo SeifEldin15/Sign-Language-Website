@@ -137,12 +137,6 @@ const DragDropOptions = ({ options, selectedAnswers, setSelectedAnswers, signTex
                   Drag me →
                 </span>
               )}
-              {/* Show score for debugging purposes only in development */}
-              {process.env.NODE_ENV === 'development' && option.score !== undefined && (
-                <span className="ml-auto text-xs text-gray-400">
-                  Score: {option.score}
-                </span>
-              )}
             </div>
           );
         })}

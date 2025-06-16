@@ -45,12 +45,6 @@ const QuestionOptions = ({ options, selectedAnswer, setSelectedAnswer }) => {
           }`}>
             {option.text || `Option ${index + 1}`}
           </span>
-          {/* Show score for debugging purposes only in development */}
-          {process.env.NODE_ENV === 'development' && option.score !== undefined && (
-            <span className="ml-auto text-xs text-gray-400">
-              Score: {option.score}
-            </span>
-          )}
         </div>
       ))}
     </div>

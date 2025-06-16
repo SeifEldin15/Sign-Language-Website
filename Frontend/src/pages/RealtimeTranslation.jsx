@@ -124,6 +124,21 @@ function RealtimeTranslation() {
         // Initialize Camera manually with getUserMedia
         const startCamera = async () => {
           try {
+            // Check if we're in a secure context
+            if (!window.isSecureContext) {
+              throw new Error('HTTPS_REQUIRED')
+            }
+
+            // Check if mediaDevices is available
+            if (!navigator.mediaDevices) {
+              throw new Error('MEDIA_DEVICES_NOT_SUPPORTED')
+            }
+
+            // Check if getUserMedia is available
+            if (!navigator.mediaDevices.getUserMedia) {
+              throw new Error('GET_USER_MEDIA_NOT_SUPPORTED')
+            }
+
             const stream = await navigator.mediaDevices.getUserMedia({
               video: {
                 width: { ideal: 1280 },
@@ -145,7 +160,26 @@ function RealtimeTranslation() {
             })
           } catch (error) {
             console.error('Error accessing camera:', error)
-            setPrediction('Camera access denied. Please allow camera permissions.')
+            
+            let errorMessage = 'Camera access error. '
+            
+            if (error.message === 'HTTPS_REQUIRED') {
+              errorMessage = '🔒 HTTPS Required: Camera access needs a secure connection. Please use HTTPS or enable SSL on your server.'
+            } else if (error.message === 'MEDIA_DEVICES_NOT_SUPPORTED') {
+              errorMessage = '📱 Media devices not supported in this browser or context.'
+            } else if (error.message === 'GET_USER_MEDIA_NOT_SUPPORTED') {
+              errorMessage = '📷 Camera access not supported in this browser.'
+            } else if (error.name === 'NotAllowedError') {
+              errorMessage = '❌ Camera permission denied. Please allow camera access and refresh.'
+            } else if (error.name === 'NotFoundError') {
+              errorMessage = '📷 No camera found. Please connect a camera and refresh.'
+            } else if (error.name === 'NotSupportedError') {
+              errorMessage = '🔒 Camera access requires HTTPS. Please use a secure connection.'
+            } else {
+              errorMessage = `Camera error: ${error.message}`
+            }
+            
+            setPrediction(errorMessage)
           }
         }
 
