@@ -10,13 +10,13 @@ const TotalPoints = ({ totalPoints, totalQuestions }) => {
   
   // Determine performance level
   const getPerformanceMessage = () => {
-    if (percentage === 100) {
+    if (totalPoints >= 10) {
       return "Perfect score! Outstanding work! 🎉";
-    } else if (percentage >= 80) {
+    } else if (totalPoints >= 8) {
       return "Excellent work! You're doing great! 👏";
-    } else if (percentage >= 60) {
+    } else if (totalPoints >= 6) {
       return "Good job! Keep practicing to improve! 💪";
-    } else if (percentage >= 40) {
+    } else if (totalPoints >= 4) {
       return "Not bad! More practice will help you improve! 📚";
     } else {
       return "Keep trying! Practice makes perfect! 🎯";
@@ -24,9 +24,9 @@ const TotalPoints = ({ totalPoints, totalQuestions }) => {
   };
 
   const getScoreColor = () => {
-    if (percentage >= 80) return "text-green-400";
-    if (percentage >= 60) return "text-yellow-400";
-    if (percentage >= 40) return "text-orange-400";
+    if (totalPoints >= 8) return "text-green-400";
+    if (totalPoints >= 6) return "text-yellow-400";
+    if (totalPoints >= 4) return "text-orange-400";
     return "text-red-400";
   };
 
@@ -38,8 +38,6 @@ const TotalPoints = ({ totalPoints, totalQuestions }) => {
     const quizResults = {
       ...savedProgress,
       lastQuizScore: totalPoints,
-      lastQuizTotal: totalQuestions,
-      lastQuizPercentage: percentage,
       lastCompletedAt: new Date().toISOString()
     };
     
@@ -63,18 +61,15 @@ const TotalPoints = ({ totalPoints, totalQuestions }) => {
     <div className="text-center p-8 max-w-md mx-auto">
       <div className="mb-6">
         <div className="text-6xl mb-4">
-          {percentage === 100 ? "🏆" : percentage >= 80 ? "🌟" : percentage >= 60 ? "👍" : "💪"}
+          {totalPoints >= 10 ? "🏆" : totalPoints >= 8 ? "🌟" : totalPoints >= 6 ? "👍" : "💪"}
         </div>
         <h2 className="text-3xl font-bold text-white mb-2">Quiz Complete!</h2>
       </div>
       
       <div className="bg-[#293D46] rounded-lg p-8 shadow-lg">
         <div className="mb-6">
-          <div className={`text-4xl font-bold mb-2 ${getScoreColor()}`}>
-            {totalPoints} / {totalQuestions}
-          </div>
-          <div className={`text-2xl font-semibold mb-4 ${getScoreColor()}`}>
-            {percentage}%
+          <div className={`text-4xl font-bold mb-4 ${getScoreColor()}`}>
+            {totalPoints} Points
           </div>
         </div>
         
@@ -90,7 +85,7 @@ const TotalPoints = ({ totalPoints, totalQuestions }) => {
             Continue Learning
           </button>
           
-          {percentage < 80 && (
+          {totalPoints < 8 && (
             <button
               onClick={handleRetry}
               className="w-full bg-[#293D46] text-white px-6 py-3 rounded-lg hover:bg-[#365148] transition-colors border border-gray-600 hover:border-[#58cc02]"
@@ -98,14 +93,6 @@ const TotalPoints = ({ totalPoints, totalQuestions }) => {
               Try Again
             </button>
           )}
-        </div>
-        
-        <div className="mt-6 pt-4 border-t border-gray-600">
-          <div className="text-sm text-gray-400">
-            <div>Questions answered correctly: {totalPoints}</div>
-            <div>Total questions: {totalQuestions}</div>
-            <div>Accuracy: {percentage}%</div>
-          </div>
         </div>
       </div>
     </div>

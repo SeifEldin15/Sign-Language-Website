@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import ProgressHeader from '../components/ProgressHeader';
 import QuestionSection from '../components/QuestionSection';
 import QuestionOptions from '../components/QuestionOptions';
+import DragDropOptions from '../components/DragDropOptions';
 import ActionButtons from '../components/ActionButtons';
 import TotalPoints from '../components/TotalPoints';
 import CorrectPopup from '../components/CorrectPopup';
@@ -14,6 +15,7 @@ import { api, handleApiError } from '../utils/api';
 
 const QuestionPage = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [selectedAnswers, setSelectedAnswers] = useState({}); // For drag and drop questions
   const [lives, setLives] = useState(5);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questions, setQuestions] = useState([]);
@@ -80,6 +82,13 @@ const QuestionPage = () => {
 
     fetchQuestions();
   }, [location.state]);
+
+  // Handle level completion when quiz is marked as complete
+  useEffect(() => {
+    if (isQuizComplete && currentQuestionIndex >= questions.length - 1) {
+      handleCompleteLevel();
+    }
+  }, [isQuizComplete, currentQuestionIndex, questions.length]);
 
   const updateLocalStorageProgress = (levelId, totalQuestions) => {
     const savedProgress = JSON.parse(localStorage.getItem('userProgress') || '{}');
@@ -148,28 +157,68 @@ const QuestionPage = () => {
       console.log('QuestionPage - No user ID for progress update'); // Debug log
     }
     
-    // Always increment local points for display
-    setTotalPoints(prevPoints => prevPoints + 1);
+    // Note: Points are now handled in handleCheck based on question type and correctness
   };
 
   const handleCheck = async () => {
     const currentQuestion = questions[currentQuestionIndex];
-    
-    // Find the correct option (the one with the highest score, typically 10)
-    const correctOption = currentQuestion?.options.find(option => option.score === 10);
+    let isCorrect = false;
+    let pointsEarned = 0;
     
     console.log('QuestionPage - handleCheck Debug:');
     console.log('- Current question:', currentQuestion?.question);
-    console.log('- Selected answer ID:', selectedAnswer);
-    console.log('- Correct option:', correctOption);
-    console.log('- Correct option ID:', correctOption?._id);
-    console.log('- All options:', currentQuestion?.options?.map(opt => ({ id: opt._id, text: opt.text, score: opt.score })));
+    console.log('- Question type:', currentQuestion?.type);
     
-    const isCorrect = selectedAnswer === correctOption?._id;
-    console.log('- Is answer correct?', isCorrect);
+    if (currentQuestion?.type === 'drag_drop') {
+      // Handle drag and drop questions with multiple correct answers
+      const correctOptions = currentQuestion?.correctOption || [];
+      const selectedOptionTexts = Object.values(selectedAnswers)
+        .map(optionId => currentQuestion?.options.find(opt => opt._id === optionId)?.text)
+        .filter(Boolean);
+      
+      console.log('- Correct options:', correctOptions);
+      console.log('- Selected options:', selectedOptionTexts);
+      
+      // Check if all correct options are selected and no incorrect ones
+      const hasAllCorrect = correctOptions.every(correct => selectedOptionTexts.includes(correct));
+      const hasOnlyCorrect = selectedOptionTexts.every(selected => correctOptions.includes(selected));
+      const hasCorrectCount = selectedOptionTexts.length === correctOptions.length;
+      
+      isCorrect = hasAllCorrect && hasOnlyCorrect && hasCorrectCount;
+      
+      if (isCorrect) {
+        // Calculate points: 5 points per correct answer
+        pointsEarned = correctOptions.length * 5;
+      }
+      
+      console.log('- Has all correct:', hasAllCorrect);
+      console.log('- Has only correct:', hasOnlyCorrect);
+      console.log('- Has correct count:', hasCorrectCount);
+      console.log('- Is answer correct?', isCorrect);
+      console.log('- Points earned:', pointsEarned);
+    } else {
+      // Handle traditional single-answer questions
+      const correctOption = currentQuestion?.options.find(option => option.score === 10);
+      
+      console.log('- Selected answer ID:', selectedAnswer);
+      console.log('- Correct option:', correctOption);
+      console.log('- Correct option ID:', correctOption?._id);
+      console.log('- All options:', currentQuestion?.options?.map(opt => ({ id: opt._id, text: opt.text, score: opt.score })));
+      
+      isCorrect = selectedAnswer === correctOption?._id;
+      pointsEarned = isCorrect ? 10 : 0;
+      
+      console.log('- Is answer correct?', isCorrect);
+      console.log('- Points earned:', pointsEarned);
+    }
     
     // Update progress in backend
     await updateQuestionProgress();
+    
+    // Add points to total if correct
+    if (isCorrect && pointsEarned > 0) {
+      setTotalPoints(prevPoints => prevPoints + pointsEarned);
+    }
     
     if (isCorrect) {
       setShowCorrectPopup(true);
@@ -178,13 +227,14 @@ const QuestionPage = () => {
       if (currentQuestionIndex === questions.length - 1) {
         // Level completed - show completion message and update progress
         setTimeout(() => {
-          handleCompleteLevel();
+          setIsQuizComplete(true);
         }, 1500); // Wait for correct answer animation
       } else {
         // Move to next question
         setTimeout(() => {
           setCurrentQuestionIndex(prev => prev + 1);
           setSelectedAnswer(null);
+          setSelectedAnswers({}); // Reset drag and drop answers
           setShowCorrectPopup(false);
           setShowQuestion(true); // Reset to show question description
         }, 1500);
@@ -206,6 +256,7 @@ const QuestionPage = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
+      setSelectedAnswers({}); // Reset drag and drop answers
       setShowCorrectPopup(false);
       setShowQuestion(true); // Reset to show question description
     } else {
@@ -223,6 +274,7 @@ const QuestionPage = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
+      setSelectedAnswers({}); // Reset drag and drop answers
       setShowQuestion(true); // Reset to show question description
     } else {
       setIsQuizComplete(true);
@@ -314,7 +366,10 @@ const QuestionPage = () => {
       {showIncorrectPopup && !isQuizComplete && (
         <IncorrectPopup 
           onContinue={handleContinue}
-          correctAnswer={currentQuestion?.sign_Text}
+          correctAnswer={currentQuestion?.type === 'drag_drop' 
+            ? (currentQuestion?.correctOption || []).join(', ')
+            : currentQuestion?.sign_Text
+          }
           isLastQuestion={currentQuestionIndex === questions.length - 1}
         />
       )}
@@ -322,7 +377,10 @@ const QuestionPage = () => {
       {showSkippedPopup && !isQuizComplete && (
         <SkippedPopup 
           onContinue={handleContinue}
-          correctAnswer={currentQuestion?.sign_Text}
+          correctAnswer={currentQuestion?.type === 'drag_drop' 
+            ? (currentQuestion?.correctOption || []).join(', ')
+            : currentQuestion?.sign_Text
+          }
           isLastQuestion={currentQuestionIndex === questions.length - 1}
         />
       )}
@@ -358,16 +416,34 @@ const QuestionPage = () => {
                 </div>
               ) : (
                 <div className={`transition-opacity duration-300 ${!showQuestion ? 'opacity-100' : 'opacity-0'}`}>
-                  <QuestionOptions 
-                    options={currentQuestion?.options || []}
-                    selectedAnswer={selectedAnswer}
-                    setSelectedAnswer={setSelectedAnswer}
-                  />
-                  <ActionButtons 
-                    selectedAnswer={selectedAnswer}
-                    onCheck={handleCheck}
-                    onSkip={handleSkip}
-                  />
+                  {currentQuestion?.type === 'drag_drop' ? (
+                    <>
+                      <DragDropOptions 
+                        options={currentQuestion?.options || []}
+                        selectedAnswers={selectedAnswers}
+                        setSelectedAnswers={setSelectedAnswers}
+                        signText={currentQuestion?.sign_Text}
+                      />
+                      <ActionButtons 
+                        selectedAnswer={Object.keys(selectedAnswers).length > 0 ? 'hasAnswers' : null}
+                        onCheck={handleCheck}
+                        onSkip={handleSkip}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <QuestionOptions 
+                        options={currentQuestion?.options || []}
+                        selectedAnswer={selectedAnswer}
+                        setSelectedAnswer={setSelectedAnswer}
+                      />
+                      <ActionButtons 
+                        selectedAnswer={selectedAnswer}
+                        onCheck={handleCheck}
+                        onSkip={handleSkip}
+                      />
+                    </>
+                  )}
                 </div>
               )}
             </div>

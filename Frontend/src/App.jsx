@@ -3,7 +3,7 @@ import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Learn from './pages/Learn'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Lesson from './pages/Lesson'
 import QuestionPage from './pages/QuestionPage'
 import Home2 from './pages/Home2'
@@ -12,6 +12,12 @@ import Dictionary from './pages/Dictionary'
 import Bookmarks from './pages/Bookmarks'
 import Commonwords from './pages/Commonwords'
 import RealtimeTranslation from './pages/RealtimeTranslation'
+
+// Protected Route Component
+function ProtectedRoute({ children }) {
+  const token = localStorage.getItem('token');
+  return token ? children : <Navigate to="/login" replace />;
+}
 
 // Loading Screen Component
 function LoadingScreen() {
@@ -164,19 +170,22 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
+        {/* Public routes - no authentication required */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/learn" element={<Learn />} />
-        <Route path="/learn/:category" element={<Learn />} />
-        <Route path="/" element={<Home2 />} />
-        <Route path="/lesson" element={<Lesson />} />
-        <Route path="/question" element={<QuestionPage />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/dictionary" element={<Dictionary />} />
-        <Route path="/commonwords" element={<Commonwords />} />
-        <Route path="/bookmarks" element={<Bookmarks />} />
-        <Route path="/realtime-translation" element={<RealtimeTranslation />} />
+        
+        {/* Protected routes - authentication required */}
+        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/learn" element={<ProtectedRoute><Learn /></ProtectedRoute>} />
+        <Route path="/learn/:category" element={<ProtectedRoute><Learn /></ProtectedRoute>} />
+        <Route path="/" element={<ProtectedRoute><Home2 /></ProtectedRoute>} />
+        <Route path="/lesson" element={<ProtectedRoute><Lesson /></ProtectedRoute>} />
+        <Route path="/question" element={<ProtectedRoute><QuestionPage /></ProtectedRoute>} />
+        <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+        <Route path="/dictionary" element={<ProtectedRoute><Dictionary /></ProtectedRoute>} />
+        <Route path="/commonwords" element={<ProtectedRoute><Commonwords /></ProtectedRoute>} />
+        <Route path="/bookmarks" element={<ProtectedRoute><Bookmarks /></ProtectedRoute>} />
+        <Route path="/realtime-translation" element={<ProtectedRoute><RealtimeTranslation /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
     </>

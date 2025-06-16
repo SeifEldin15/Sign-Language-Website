@@ -50,7 +50,7 @@ const Home2 = () => {
           <h2 className="text-xl mb-4">Services</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* Real Time Communication Card */}
-            <div className="rounded-xl h-64 relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105" style={{background: 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 50%, #1E3A8A 100%)', boxShadow: '0 8px 32px rgba(59, 130, 246, 0.3)'}}>
+            <div className="rounded-xl h-64 relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105" style={{background: 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 50%, #1E3A8A 100%)', boxShadow: '0 8px 32px rgba(59, 130, 246, 0.3)'}} onClick={() => navigate('/realtime-translation')}>
               <div className="absolute top-4 left-4 z-10">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center mb-4" style={{backgroundColor: '#1E3A8A'}}>
                   <ChatBubbleLeftRightIcon className="w-5 h-5 text-white" />
