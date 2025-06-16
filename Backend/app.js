@@ -14,7 +14,7 @@ const port =process.env.PORT ||  3002
 app.use(express.json())
 app.use('/uploads', express.static('uploads'));
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your frontend URL
+  origin: ['http://localhost:5173', 'https://agamista.cloud', 'http://agamista.cloud'], // Allow frontend URLs
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
