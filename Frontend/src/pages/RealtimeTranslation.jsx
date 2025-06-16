@@ -31,8 +31,7 @@ function RealtimeTranslation() {
         // Load required MediaPipe scripts
         await Promise.all([
           loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js'),
-          loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js'),
-          loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js')
+          loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js')
         ])
 
         // Wait a bit for scripts to be ready
@@ -122,14 +121,35 @@ function RealtimeTranslation() {
 
         handsRef.current.onResults(onResults)
 
-        // Initialize Camera
-        cameraRef.current = new window.Camera(videoRef.current, {
-          onFrame: async () => {
-            await handsRef.current.send({image: videoRef.current})
-          },
-        })
+        // Initialize Camera manually with getUserMedia
+        const startCamera = async () => {
+          try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+              video: {
+                width: { ideal: 1280 },
+                height: { ideal: 720 },
+                facingMode: 'user'
+              }
+            })
+            
+            videoRef.current.srcObject = stream
+            videoRef.current.addEventListener('loadeddata', () => {
+              // Start processing frames
+              const sendFrame = async () => {
+                if (videoRef.current && handsRef.current) {
+                  await handsRef.current.send({image: videoRef.current})
+                }
+                requestAnimationFrame(sendFrame)
+              }
+              sendFrame()
+            })
+          } catch (error) {
+            console.error('Error accessing camera:', error)
+            setPrediction('Camera access denied. Please allow camera permissions.')
+          }
+        }
 
-        cameraRef.current.start()
+        startCamera()
 
       } catch (error) {
         console.error('Error initializing MediaPipe:', error)
@@ -143,8 +163,9 @@ function RealtimeTranslation() {
       if (wsRef.current) {
         wsRef.current.close()
       }
-      if (cameraRef.current) {
-        cameraRef.current.stop()
+      if (videoRef.current && videoRef.current.srcObject) {
+        const tracks = videoRef.current.srcObject.getTracks()
+        tracks.forEach(track => track.stop())
       }
     }
   }, [])
