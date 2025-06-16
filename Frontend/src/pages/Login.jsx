@@ -27,7 +27,7 @@ const Login = () => {
     });
     
     try {
-        const response = await axios.post('http://localhost:3002/api/auth/signin', formData);
+        const response = await axios.post('http://44.246.135.176:3002/api/auth/signin', formData);
         console.log('Login response:', response.data);
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));

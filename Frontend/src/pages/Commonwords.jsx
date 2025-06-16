@@ -74,7 +74,7 @@ function Commonwords() {
   // Fetch user bookmarks
   const fetchBookmarks = async (userIdParam) => {
     try {
-      const response = await fetch('http://localhost:3002/api/user/bookmarks', {
+      const response = await fetch('http://44.246.135.176:3002/api/user/bookmarks', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ function Commonwords() {
     }
 
     try {
-      const response = await fetch('http://localhost:3002/api/user/bookmarks', {
+      const response = await fetch('http://44.246.135.176:3002/api/user/bookmarks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ function Commonwords() {
     if (!userId) return;
 
     try {
-      const response = await fetch('http://localhost:3002/api/user/bookmarks', {
+      const response = await fetch('http://44.246.135.176:3002/api/user/bookmarks', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

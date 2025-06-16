@@ -74,7 +74,7 @@ GET /api/sign/:id                 - Get specific sign
 2. **Environment Variables**
    Create a `.env` file in the Backend directory:
    ```env
-   BASE_URL=http://localhost:3002/
+   BASE_URL=http://44.246.135.176:3002/
    PORT=3002
    DB_CONNECTION=mongodb://127.0.0.1:27017/gproject
    JWT_SECRET=your_jwt_secret_here
@@ -100,7 +100,7 @@ GET /api/sign/:id                 - Get specific sign
 2. **Environment Variables**
    Create a `.env` file in the Frontend directory:
    ```env
-   REACT_APP_API_URL=http://localhost:3002/api
+   REACT_APP_API_URL=http://44.246.135.176:3002/api
    ```
 
 3. **Start the Development Server**

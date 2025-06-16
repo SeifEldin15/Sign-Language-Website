@@ -105,7 +105,7 @@ const Settings = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:3002/api/user/${user._id || user.id}`,
+        `http://44.246.135.176:3002/api/user/${user._id || user.id}`,
         updateData,
         {
           headers: {

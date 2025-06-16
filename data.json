@@ -4,7 +4,7 @@
         {
             "_id": "67a424a0cedbfc1e58072e5d",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/236ca61c-f229-423f-a801-3a684aa04c17-hello.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/236ca61c-f229-423f-a801-3a684aa04c17-hello.gif",
             "sign_Text": "Hello",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -31,7 +31,7 @@
         {
             "_id": "67a424fdcedbfc1e58072e62",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/f1744d7f-c606-4124-9e21-ad8f92ae5a6c-you.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/f1744d7f-c606-4124-9e21-ad8f92ae5a6c-you.gif",
             "sign_Text": "You",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -58,7 +58,7 @@
         {
             "_id": "67a42537cedbfc1e58072e67",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/635dad83-218a-4f51-b04f-b70ad8c4ef13-me.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/635dad83-218a-4f51-b04f-b70ad8c4ef13-me.gif",
             "sign_Text": "Me",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -85,7 +85,7 @@
         {
             "_id": "67a426bacedbfc1e58072e6c",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/21c23b8c-42fc-45b5-926c-3cb282a12b26-meet.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/21c23b8c-42fc-45b5-926c-3cb282a12b26-meet.gif",
             "sign_Text": "Meet",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -112,7 +112,7 @@
         {
             "_id": "67a4270fcedbfc1e58072e7e",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/64466b4f-62c7-4643-aa82-d66b4508d996-nice.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/64466b4f-62c7-4643-aa82-d66b4508d996-nice.gif",
             "sign_Text": "Nice",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -139,7 +139,7 @@
         {
             "_id": "67a42784cedbfc1e58072e83",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/615722a8-c0f9-4a54-b7a4-5175fd3f28a1-nice_to_meet_you.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/615722a8-c0f9-4a54-b7a4-5175fd3f28a1-nice_to_meet_you.gif",
             "sign_Text": "Nice To Meet You",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -166,7 +166,7 @@
         {
             "_id": "67a427fccedbfc1e58072e88",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/de3d7dba-f518-495f-98fe-7a4f20f03266-how.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/de3d7dba-f518-495f-98fe-7a4f20f03266-how.gif",
             "sign_Text": "How",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -193,7 +193,7 @@
         {
             "_id": "67a42878cedbfc1e58072e8d",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/f9c93009-69b6-49d5-99c9-3c8b16cce011-hello_how_are_you.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/f9c93009-69b6-49d5-99c9-3c8b16cce011-hello_how_are_you.gif",
             "sign_Text": "Hello How Are You",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -220,7 +220,7 @@
         {
             "_id": "67a428cfcedbfc1e58072e92",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/37ca46a5-b92d-4b12-88f3-22631ef140e1-fine.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/37ca46a5-b92d-4b12-88f3-22631ef140e1-fine.gif",
             "sign_Text": "Fine",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -247,7 +247,7 @@
         {
             "_id": "67a42924cedbfc1e58072e97",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/0b7473ff-54aa-4a29-b860-950b723d02b9-i'm_fine.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/0b7473ff-54aa-4a29-b860-950b723d02b9-i'm_fine.gif",
             "sign_Text": "I'm Fine",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -274,7 +274,7 @@
         {
             "_id": "67a429e8cedbfc1e58072ea1",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/502392b4-bd1c-427e-a4c8-6e990e1859e7-i'm_fine_how_are_you.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/502392b4-bd1c-427e-a4c8-6e990e1859e7-i'm_fine_how_are_you.gif",
             "sign_Text": "I'm Fine How Are You",
             "type": "MCQ",
             "question": "Q.Guess the correct word",
@@ -301,7 +301,7 @@
         {
             "_id": "67a42b5a89fc21a4c9aa41f5",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/f308b726-18c2-4bdc-9f12-6ad8c72a4b8e-i'm_fine_how_are_you.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/f308b726-18c2-4bdc-9f12-6ad8c72a4b8e-i'm_fine_how_are_you.gif",
             "sign_Text": "I'm Fine How Are You",
             "type": "T/F",
             "question": "Q.Sign is nice to meet you ?",
@@ -323,7 +323,7 @@
         {
             "_id": "67a42ba089fc21a4c9aa41f9",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/242816cf-06c5-4a1f-9a1c-9698019b2231-i'm_fine.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/242816cf-06c5-4a1f-9a1c-9698019b2231-i'm_fine.gif",
             "sign_Text": "I'm Fine",
             "type": "T/F",
             "question": "Q.Sign is I'm Fine ?",
@@ -345,7 +345,7 @@
         {
             "_id": "67a42bc689fc21a4c9aa41fd",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/7914bcc3-2241-4514-acf6-6ee07861dc10-meet.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/7914bcc3-2241-4514-acf6-6ee07861dc10-meet.gif",
             "sign_Text": "Meet",
             "type": "T/F",
             "question": "Q.Sign is Meet ?",
@@ -367,7 +367,7 @@
         {
             "_id": "67a42be389fc21a4c9aa4201",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/d3d0e74a-074c-4e55-93a4-30d17115f40b-me.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/d3d0e74a-074c-4e55-93a4-30d17115f40b-me.gif",
             "sign_Text": "Me",
             "type": "T/F",
             "question": "Q.Sign is You ?",
@@ -389,7 +389,7 @@
         {
             "_id": "67a42c1089fc21a4c9aa4205",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/39a52916-1882-4261-a744-5fe172b5f3db-nice.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/39a52916-1882-4261-a744-5fe172b5f3db-nice.gif",
             "sign_Text": "Nice",
             "type": "T/F",
             "question": "Q.Sign is Nice ?",
@@ -411,7 +411,7 @@
         {
             "_id": "67a42c4389fc21a4c9aa4209",
             "level": "67a4204dc40f603a9cc5183c",
-            "sign_Url": "http://localhost:3002/uploads/questions/04eaf0d3-9c01-4f44-8c62-42916d92f0b2-hello.gif",
+            "sign_Url": "http://44.246.135.176:3002/uploads/questions/04eaf0d3-9c01-4f44-8c62-42916d92f0b2-hello.gif",
             "sign_Text": "Hello",
             "type": "T/F",
             "question": "Q.Sign is Hello ?",

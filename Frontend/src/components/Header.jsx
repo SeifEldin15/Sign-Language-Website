@@ -23,7 +23,7 @@ const Header = () => {
       const userId = getUserId();
       if (!userId) return;
 
-      const response = await fetch(`http://localhost:3002/api/user/current?userId=${userId}`);
+      const response = await fetch(`http://44.246.135.176:3002/api/user/current?userId=${userId}`);
       const data = await response.json();
       
       if (data.user) {
@@ -46,7 +46,7 @@ const Header = () => {
       const userId = getUserId();
       if (!userId) return;
 
-      const response = await fetch(`http://localhost:3002/api/notifications/user/${userId}`);
+      const response = await fetch(`http://44.246.135.176:3002/api/notifications/user/${userId}`);
       const data = await response.json();
       
       if (data.notifications) {
@@ -83,7 +83,7 @@ const Header = () => {
   // Mark notification as read
   const markAsRead = async (notificationId) => {
     try {
-      await fetch(`http://localhost:3002/api/notifications/${notificationId}/read`, {
+      await fetch(`http://44.246.135.176:3002/api/notifications/${notificationId}/read`, {
         method: 'PUT'
       });
       
@@ -107,7 +107,7 @@ const Header = () => {
       const userId = getUserId();
       if (!userId) return;
 
-      await fetch(`http://localhost:3002/api/notifications/user/${userId}/read-all`, {
+      await fetch(`http://44.246.135.176:3002/api/notifications/user/${userId}/read-all`, {
         method: 'PUT'
       });
       

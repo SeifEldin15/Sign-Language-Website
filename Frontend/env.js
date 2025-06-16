@@ -1,1 +1,1 @@
-export default REACT_APP_BACKEND_URL="http://localhost:3002"
+export default REACT_APP_BACKEND_URL="http://44.246.135.176:3002"

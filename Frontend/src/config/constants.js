@@ -1,5 +1,5 @@
 // config/constants.js
-export const API_BASE_URL = 'http://localhost:3002/api';
+export const API_BASE_URL = 'http://44.246.135.176:3002/api';
 
 // Category mapping - maps frontend category slugs to database category IDs
 export const CATEGORY_MAP = {
